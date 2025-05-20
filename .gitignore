@@ -53,7 +53,7 @@ coverage/
 
 # --- Other ---
 # If you have SQLite database files you don't want to commit (e.g., large dev dbs)
-# *.db
+*.db
 # *.sqlite
 # *.sqlite3
 # However, if it's an empty or schema-only db, you might commit it.
