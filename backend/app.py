@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 
 # If you installed python-dotenv and plan to use a .env file:
@@ -31,6 +32,7 @@ db = SQLAlchemy(app)  # Initialize SQLAlchemy with your app
 # --- Define Your Database Models (Tables) ---
 # Example: A Player model (you'll add more for brackets, teams, etc.)
 class Player(db.Model):
+    __tablename__ = "player"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     # Relationship to their bracket submissions
@@ -41,6 +43,7 @@ class Player(db.Model):
 
 
 class Team(db.Model):
+    __tablename__ = "team"
     id = db.Column(db.Integer, primary_key=True)  # Your auto-incrementing primary key
     nhl_api_id = db.Column(
         db.Integer, unique=True, nullable=False
@@ -55,37 +58,94 @@ class Team(db.Model):
         return f"<Team {self.abbreviation}>"
 
 
-class BracketSubmission(db.Model):
+class Series(db.Model):
+    __tablename__ = "series"
     id = db.Column(db.Integer, primary_key=True)
-    bracket_name = db.Column(db.String(100), nullable=False, default="My Bracket")
-    player_id = db.Column(db.Integer, db.ForeignKey("player.id"), nullable=False)
-    # timestamp_submitted = db.Column(db.DateTime, default=datetime.utcnow) # Requires import datetime
+    round_number = db.Column(db.Integer, nullable=False)  # e.g., 1, 2, 3, 4
+    series_identifier = db.Column(
+        db.String(50), unique=True, nullable=False
+    )  # e.g., "EC_R1_M1", "SCF"
+    description = db.Column(
+        db.String(100), nullable=True
+    )  # e.g., "Eastern Conference Quarterfinal 1"
 
-    # Relationship to individual picks in this submission
+    # Foreign keys for the two teams in the series
+    team1_id = db.Column(db.Integer, db.ForeignKey("team.id"), nullable=True)
+    team2_id = db.Column(db.Integer, db.ForeignKey("team.id"), nullable=True)
+
+    # Relationships to get Team objects
+    team1 = db.relationship(
+        "Team",
+        foreign_keys=[team1_id],
+        backref=db.backref("series_as_team1", lazy="dynamic"),
+    )
+    team2 = db.relationship(
+        "Team",
+        foreign_keys=[team2_id],
+        backref=db.backref("series_as_team2", lazy="dynamic"),
+    )
+
+    # Status of the series
+    status = db.Column(
+        db.String(20), nullable=False, default="PENDING"
+    )  # e.g., PENDING, ACTIVE, COMPLETED
+
+    # Actual winner of the series
+    actual_winner_team_id = db.Column(
+        db.Integer, db.ForeignKey("team.id"), nullable=True
+    )
+    actual_winner = db.relationship("Team", foreign_keys=[actual_winner_team_id])
+
+    # Optional: track games won if you want to display series scores
+    games_team1_won = db.Column(db.Integer, nullable=True, default=0)
+    games_team2_won = db.Column(db.Integer, nullable=True, default=0)
+
+    # Relationship to picks made for this series
+    picks_for_series = db.relationship("Pick", backref="series", lazy="dynamic")
+
+    def __repr__(self):
+        return f"<Series {self.series_identifier} (Round {self.round_number})>"
+
+
+class BracketSubmission(db.Model):
+    __tablename__ = "bracket_submission"
+    id = db.Column(db.Integer, primary_key=True)
+    player_id = db.Column(db.Integer, db.ForeignKey("player.id"), nullable=False)
+    submission_timestamp = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow
+    )
+    bracket_name = db.Column(
+        db.String(100), nullable=True
+    )  # Optional name for the bracket
+
+    # Relationship: one submission has many picks. If a submission is deleted, delete its picks.
     picks = db.relationship(
-        "Pick", backref="submission", lazy=True, cascade="all, delete-orphan"
+        "Pick", backref="submission", lazy="dynamic", cascade="all, delete-orphan"
     )
 
     def __repr__(self):
-        return f"<BracketSubmission {self.id} by Player {self.player_id}>"
+        return f"<BracketSubmission {self.id} by Player ID {self.player_id}>"
 
 
 class Pick(db.Model):
+    __tablename__ = "pick"
     id = db.Column(db.Integer, primary_key=True)
     submission_id = db.Column(
         db.Integer, db.ForeignKey("bracket_submission.id"), nullable=False
     )
-    series_identifier = db.Column(
-        db.String(50), nullable=False
-    )  # e.g., "R1M1_EC", "SCF"
+    series_id = db.Column(db.Integer, db.ForeignKey("series.id"), nullable=False)
     predicted_winner_team_id = db.Column(
         db.Integer, db.ForeignKey("team.id"), nullable=False
     )
 
-    # predicted_winner = db.relationship('Team') # To easily access team info from a pick
+    # Relationship to easily get the predicted winner Team object
+    predicted_winner = db.relationship("Team", foreign_keys=[predicted_winner_team_id])
+
+    # You can add constraints if needed, e.g., a player can only pick one winner for a specific series in a submission
+    # db.UniqueConstraint('submission_id', 'series_id', name='uq_submission_series_pick')
 
     def __repr__(self):
-        return f"<Pick for Series {self.series_identifier} in Sub {self.submission_id}>"
+        return f"<Pick by Sub ID {self.submission_id} for Series ID {self.series_id} - Winner: Team ID {self.predicted_winner_team_id}>"
 
 
 # --- API Routes ---
@@ -134,6 +194,8 @@ if __name__ == "__main__":
     # This is a good place to create tables if they don't exist
     # However, for more complex apps, Flask-Migrate is better for schema changes
     with app.app_context():  # Create an application context
-        db.create_all()  # Creates tables based on your models
+        print("Checking and creating database tables if they don't exist...")
+        db.create_all()
+        print("Database tables checked/created.")
 
     app.run(debug=True, port=5000)

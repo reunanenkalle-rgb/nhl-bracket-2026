@@ -1,0 +1,96 @@
+{
+    "playoff_year": 2025,
+    "series_definitions": [
+      {
+        "round_number": 1,
+        "series_identifier": "EC_R1_M1",
+        "description": "Eastern Conference Quarterfinal 1 (E1 vs EWC2)",
+        "team1_abbr": "TOR",
+        "team2_abbr": "OTT"
+      },
+      {
+        "round_number": 1,
+        "series_identifier": "EC_R1_M2",
+        "description": "Eastern Conference Quarterfinal 2 (E2 vs E3)",
+        "team1_abbr": "TBL",
+        "team2_abbr": "FLA"
+      },
+      {
+        "round_number": 1,
+        "series_identifier": "EC_R1_M3",
+        "description": "Eastern Conference Quarterfinal 3 (M1 vs EWC1)",
+        "team1_abbr": "WSH",
+        "team2_abbr": "MTL"
+      },
+      {
+        "round_number": 1,
+        "series_identifier": "EC_R1_M4",
+        "description": "Eastern Conference Quarterfinal 4 (M2 vs M3)",
+        "team1_abbr": "CAR",
+        "team2_abbr": "NJD"
+      },
+      {
+        "round_number": 1,
+        "series_identifier": "WC_R1_M1",
+        "description": "Western Conference Quarterfinal 1 (C1 vs WWC2)",
+        "team1_abbr": "WPG",
+        "team2_abbr": "STL"
+      },
+      {
+        "round_number": 1,
+        "series_identifier": "WC_R1_M2",
+        "description": "Western Conference Quarterfinal 2 (C2 vs C3)",
+        "team1_abbr": "DAL",
+        "team2_abbr": "COL"
+      },
+      {
+        "round_number": 1,
+        "series_identifier": "WC_R1_M3",
+        "description": "Western Conference Quarterfinal 3 (P1 vs WWC1)",
+        "team1_abbr": "VGK",
+        "team2_abbr": "MIN"
+      },
+      {
+        "round_number": 1,
+        "series_identifier": "WC_R1_M4",
+        "description": "Western Conference Quarterfinal 4 (P2 vs P3)",
+        "team1_abbr": "LAK",
+        "team2_abbr": "EDM"
+      },
+      {
+        "round_number": 2,
+        "series_identifier": "EC_R2_M1",
+        "description": "Eastern Conference Semifinal 1 (Winner EC_R1_M1 vs Winner EC_R1_M2)"
+      },
+      {
+        "round_number": 2,
+        "series_identifier": "EC_R2_M2",
+        "description": "Eastern Conference Semifinal 2 (Winner EC_R1_M3 vs Winner EC_R1_M4)"
+      },
+      {
+        "round_number": 2,
+        "series_identifier": "WC_R2_M1",
+        "description": "Western Conference Semifinal 1 (Winner WC_R1_M1 vs Winner WC_R1_M2)"
+      },
+      {
+        "round_number": 2,
+        "series_identifier": "WC_R2_M2",
+        "description": "Western Conference Semifinal 2 (Winner WC_R1_M3 vs Winner WC_R1_M4)"
+      },
+      {
+        "round_number": 3,
+        "series_identifier": "EC_R3_CF",
+        "description": "Eastern Conference Final (Winner EC_R2_M1 vs Winner EC_R2_M2)"
+      },
+      {
+        "round_number": 3,
+        "series_identifier": "WC_R3_CF",
+        "description": "Western Conference Final (Winner WC_R2_M1 vs Winner WC_R2_M2)"
+      },
+      {
+        "round_number": 4,
+        "series_identifier": "SCF",
+        "description": "Stanley Cup Final (Winner EC_R3_CF vs Winner WC_R3_CF)"
+      }
+    ]
+  }
