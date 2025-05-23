@@ -1,8 +1,16 @@
+// frontend/src/services/apiService.ts
+
 import axios, { type AxiosResponse } from 'axios';
-import type { Player, Team, BracketSubmission } from '@/types'; // Adjust path
+import type {
+    Player,
+    Team,
+    Series,
+    BracketSubmissionApiPayload, // Use the new payload type
+    BracketSubmissionApiResponse // Use the new response type
+} from '@/types'; // Ensure this path is correct
 
 const apiClient = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'http://localhost:5000/api', // Your Flask backend URL
     headers: {
         'Content-Type': 'application/json',
     },
@@ -12,19 +20,36 @@ export default {
     getPlayers(): Promise<AxiosResponse<Player[]>> {
         return apiClient.get('/players');
     },
+
     addPlayer(name: string): Promise<AxiosResponse<{ message: string; player: Player }>> {
         return apiClient.post('/players', { name });
     },
+
     getTeams(): Promise<AxiosResponse<Team[]>> {
+        // Ensure your backend /api/teams returns data matching the Team interface
         return apiClient.get('/teams');
     },
-    submitBracket(submissionData: Omit<BracketSubmission, 'id' | 'player_id'>, playerId: number): Promise<AxiosResponse<{ message: string; submission: BracketSubmission }>> {
-        // The actual payload structure will depend on your backend endpoint
-        const payload = {
-            ...submissionData,
-            player_id: playerId,
-        };
-        return apiClient.post('/bracket_submissions', payload);
+
+    getPlayoffBracketStructure(): Promise<AxiosResponse<Series[]>> {
+        return apiClient.get('/playoff_bracket_structure');
+    },
+
+    /**
+     * Submits the completed bracket to the backend.
+     * @param submissionPayload - The data for the bracket submission.
+     * Should conform to BracketSubmissionApiPayload interface.
+     */
+    submitBracket(submissionPayload: BracketSubmissionApiPayload): Promise<AxiosResponse<BracketSubmissionApiResponse>> {
+        // The submissionPayload already contains player_name and picks array
+        // as expected by the backend endpoint designed earlier.
+        return apiClient.post('/bracket_submissions', submissionPayload);
     }
-    // Add more functions here
+
+    // You can add more functions here as your app grows, for example:
+    // getSubmittedBracket(submissionId: number): Promise<AxiosResponse<FullBracketDetails>> {
+    //   return apiClient.get(`/bracket_submissions/${submissionId}`);
+    // },
+    // getLeaderboard(): Promise<AxiosResponse<LeaderboardEntry[]>> {
+    //   return apiClient.get('/leaderboard');
+    // }
 };
