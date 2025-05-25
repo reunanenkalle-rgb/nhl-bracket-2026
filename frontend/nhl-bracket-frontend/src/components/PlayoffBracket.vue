@@ -217,7 +217,7 @@
     align-items: flex-start; /* Align conference blocks at their top */
     overflow-x: auto; /* Allow horizontal scrolling on smaller screens */
     padding: 20px 0;
-    gap:20px; /* Gap between major sections (West, Final, East) */
+    gap:10px; /* Gap between major sections (West, Final, East) */
   }
   
   .conference-bracket {
@@ -241,26 +241,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;  /* Let SeriesMatchup define its width */
-    gap: 10px; /* Increased vertical gap between matchups for traditional bracket look */
+    gap: 5px; /* Increased vertical gap between matchups for traditional bracket look */
     padding: 0 5px; /* Minimal horizontal padding */
     min-width: auto; /* Ensure matchups have enough space */
   }
   
   /* Specific alignment for matchups in different rounds to create the tree effect */
   /* This part is tricky and needs careful adjustment based on SeriesMatchup height */
-  .round-column.round-1 .series-matchup { margin-bottom: 10px; }
-  .round-column.round-2 { justify-content: space-around; padding-top: 10px; /* Example: push R2 down */ }
-  .round-column.round-3 { justify-content: center; padding-top: 10px; /* Example: push R3 further down */ }
-  .final-column.round-4 { justify-content: center; align-items: center; padding-top: 220px; /* Final in middle */ }
+  /* .round-column.round-1 .series-matchup { margin-bottom: 10px; } */
+  .round-column.round-2 { justify-content: center; padding-top: 0px; /* Example: push R2 down */ }
+  .round-column.round-3 { justify-content: center; padding-top: 0px; /* Example: push R3 further down */ }
+  .final-column.round-4 { justify-content: center; align-items: center; padding-top: 197px; /* Final in middle */ }
   
   
   .round-title { /* Renamed from .round-column h2 for clarity */
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.1em;
     color: #333;
     font-weight: 600;
-    white-space: nowrap;
+    /* white-space: nowrap; */
+    max-width: 150px;
+    line-height: 1.3;
+    word-wrap: break-word;
   }
   
   .round-locked {
@@ -276,8 +279,8 @@
     flex-direction: column;
     align-items: center; /* Center the final matchup */
     justify-content: center; /* Vertically center if it has extra space */
-    min-width: 280px; /* Slightly wider for emphasis */
-    padding-top: 180px; /* Align with conference finals roughly */
+    min-width: 180px; /* Slightly wider for emphasis */
+    padding-top: 200px; /* Align with conference finals roughly */
   }
   
   
