@@ -28,6 +28,7 @@ export interface BracketState {
   isLoading: boolean;
   error: string | null;
   isBracketCompletelyPicked: boolean;
+  successMessage: string | null; // New state for success messages
 }
 
 export const useBracketStore = defineStore('bracket', {
@@ -39,6 +40,7 @@ export const useBracketStore = defineStore('bracket', {
     isLoading: false,
     error: null,
     isBracketCompletelyPicked: false,
+    successMessage: null, // Initialize successMessage
   }),
 
   getters: {
@@ -262,18 +264,23 @@ export const useBracketStore = defineStore('bracket', {
       try {
         const response = await apiService.submitBracket(payloadForApi); // This should now match
         console.log("Bracket submitted successfully:", response.data);
-        alert(`Bracket submitted successfully! Submission ID: ${response.data.submission_id}`);
+        this.successMessage = `Bracket submitted successfully! Submission ID: ${response.data.submission_id}`; // Set success message
+        this.error = null; // Clear any previous errors
         // TODO: Optionally, reset state, clear picks, or navigate to a confirmation page
         this.userPicks.clear();
         this.allSeries.forEach(s => s.predicted_winner_team_id = null);
         this.updateAdvancingTeams(); // Reset visual bracket
         this.playerName = '';
         this.checkIfBracketIsComplete();
-      } catch (err) {
-        this.error = 'Failed to submit bracket.';
-        alert('Error submitting bracket. Please try again.');
+    } catch (err: any) {
+        this.successMessage = null; // Clear success message
+        if (err.response && err.response.data && err.response.data.error) {
+            this.error = `Submission Error: ${err.response.data.error}`;
+        } else {
+            this.error = 'Failed to submit bracket. An unknown error occurred.';
+        }
         console.error(err);
-      } finally {
+    } finally {
         this.isLoading = false;
       }
     },
