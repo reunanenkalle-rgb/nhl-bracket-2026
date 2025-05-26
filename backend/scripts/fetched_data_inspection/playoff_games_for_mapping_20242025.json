@@ -1,0 +1,1514 @@
+[
+  {
+    "game_id": 2024030111,
+    "date": "2025-04-20",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 1,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "OTT"
+  },
+  {
+    "game_id": 2024030111,
+    "date": "2025-04-20",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 1,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "OTT"
+  },
+  {
+    "game_id": 2024030112,
+    "date": "2025-04-22",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 2,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "OTT"
+  },
+  {
+    "game_id": 2024030112,
+    "date": "2025-04-22",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 2,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "OTT"
+  },
+  {
+    "game_id": 2024030113,
+    "date": "2025-04-24",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 3,
+    "home_team_abbr": "OTT",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030113,
+    "date": "2025-04-24",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 3,
+    "home_team_abbr": "OTT",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030114,
+    "date": "2025-04-26",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 4,
+    "home_team_abbr": "OTT",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030114,
+    "date": "2025-04-26",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 4,
+    "home_team_abbr": "OTT",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030115,
+    "date": "2025-04-29",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 5,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "OTT"
+  },
+  {
+    "game_id": 2024030115,
+    "date": "2025-04-29",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 5,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "OTT"
+  },
+  {
+    "game_id": 2024030116,
+    "date": "2025-05-01",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 6,
+    "home_team_abbr": "OTT",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030116,
+    "date": "2025-05-01",
+    "round": 1,
+    "api_series_idx": 1,
+    "game_num_in_series": 6,
+    "home_team_abbr": "OTT",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030121,
+    "date": "2025-04-22",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 1,
+    "home_team_abbr": "TBL",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030121,
+    "date": "2025-04-22",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 1,
+    "home_team_abbr": "TBL",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030122,
+    "date": "2025-04-24",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 2,
+    "home_team_abbr": "TBL",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030122,
+    "date": "2025-04-24",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 2,
+    "home_team_abbr": "TBL",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030123,
+    "date": "2025-04-26",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 3,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TBL"
+  },
+  {
+    "game_id": 2024030123,
+    "date": "2025-04-26",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 3,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TBL"
+  },
+  {
+    "game_id": 2024030124,
+    "date": "2025-04-28",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 4,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TBL"
+  },
+  {
+    "game_id": 2024030124,
+    "date": "2025-04-28",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 4,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TBL"
+  },
+  {
+    "game_id": 2024030125,
+    "date": "2025-04-30",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 5,
+    "home_team_abbr": "TBL",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030125,
+    "date": "2025-04-30",
+    "round": 1,
+    "api_series_idx": 2,
+    "game_num_in_series": 5,
+    "home_team_abbr": "TBL",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030131,
+    "date": "2025-04-21",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 1,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "MTL"
+  },
+  {
+    "game_id": 2024030131,
+    "date": "2025-04-21",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 1,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "MTL"
+  },
+  {
+    "game_id": 2024030132,
+    "date": "2025-04-23",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 2,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "MTL"
+  },
+  {
+    "game_id": 2024030132,
+    "date": "2025-04-23",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 2,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "MTL"
+  },
+  {
+    "game_id": 2024030133,
+    "date": "2025-04-25",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 3,
+    "home_team_abbr": "MTL",
+    "away_team_abbr": "WSH"
+  },
+  {
+    "game_id": 2024030133,
+    "date": "2025-04-25",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 3,
+    "home_team_abbr": "MTL",
+    "away_team_abbr": "WSH"
+  },
+  {
+    "game_id": 2024030134,
+    "date": "2025-04-27",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 4,
+    "home_team_abbr": "MTL",
+    "away_team_abbr": "WSH"
+  },
+  {
+    "game_id": 2024030134,
+    "date": "2025-04-27",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 4,
+    "home_team_abbr": "MTL",
+    "away_team_abbr": "WSH"
+  },
+  {
+    "game_id": 2024030135,
+    "date": "2025-04-30",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 5,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "MTL"
+  },
+  {
+    "game_id": 2024030135,
+    "date": "2025-04-30",
+    "round": 1,
+    "api_series_idx": 3,
+    "game_num_in_series": 5,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "MTL"
+  },
+  {
+    "game_id": 2024030141,
+    "date": "2025-04-20",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 1,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "NJD"
+  },
+  {
+    "game_id": 2024030141,
+    "date": "2025-04-20",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 1,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "NJD"
+  },
+  {
+    "game_id": 2024030142,
+    "date": "2025-04-22",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 2,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "NJD"
+  },
+  {
+    "game_id": 2024030142,
+    "date": "2025-04-22",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 2,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "NJD"
+  },
+  {
+    "game_id": 2024030143,
+    "date": "2025-04-25",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 3,
+    "home_team_abbr": "NJD",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030143,
+    "date": "2025-04-25",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 3,
+    "home_team_abbr": "NJD",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030144,
+    "date": "2025-04-27",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 4,
+    "home_team_abbr": "NJD",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030144,
+    "date": "2025-04-27",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 4,
+    "home_team_abbr": "NJD",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030145,
+    "date": "2025-04-29",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 5,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "NJD"
+  },
+  {
+    "game_id": 2024030145,
+    "date": "2025-04-29",
+    "round": 1,
+    "api_series_idx": 4,
+    "game_num_in_series": 5,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "NJD"
+  },
+  {
+    "game_id": 2024030151,
+    "date": "2025-04-19",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 1,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "STL"
+  },
+  {
+    "game_id": 2024030151,
+    "date": "2025-04-19",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 1,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "STL"
+  },
+  {
+    "game_id": 2024030152,
+    "date": "2025-04-21",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 2,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "STL"
+  },
+  {
+    "game_id": 2024030152,
+    "date": "2025-04-21",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 2,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "STL"
+  },
+  {
+    "game_id": 2024030153,
+    "date": "2025-04-24",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 3,
+    "home_team_abbr": "STL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030153,
+    "date": "2025-04-24",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 3,
+    "home_team_abbr": "STL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030154,
+    "date": "2025-04-27",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 4,
+    "home_team_abbr": "STL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030154,
+    "date": "2025-04-27",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 4,
+    "home_team_abbr": "STL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030155,
+    "date": "2025-04-30",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 5,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "STL"
+  },
+  {
+    "game_id": 2024030155,
+    "date": "2025-04-30",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 5,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "STL"
+  },
+  {
+    "game_id": 2024030156,
+    "date": "2025-05-02",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 6,
+    "home_team_abbr": "STL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030156,
+    "date": "2025-05-02",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 6,
+    "home_team_abbr": "STL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030157,
+    "date": "2025-05-04",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 7,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "STL"
+  },
+  {
+    "game_id": 2024030157,
+    "date": "2025-05-04",
+    "round": 1,
+    "api_series_idx": 5,
+    "game_num_in_series": 7,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "STL"
+  },
+  {
+    "game_id": 2024030161,
+    "date": "2025-04-19",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 1,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "COL"
+  },
+  {
+    "game_id": 2024030161,
+    "date": "2025-04-19",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 1,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "COL"
+  },
+  {
+    "game_id": 2024030162,
+    "date": "2025-04-21",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 2,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "COL"
+  },
+  {
+    "game_id": 2024030162,
+    "date": "2025-04-21",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 2,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "COL"
+  },
+  {
+    "game_id": 2024030163,
+    "date": "2025-04-23",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 3,
+    "home_team_abbr": "COL",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030163,
+    "date": "2025-04-23",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 3,
+    "home_team_abbr": "COL",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030164,
+    "date": "2025-04-26",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 4,
+    "home_team_abbr": "COL",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030164,
+    "date": "2025-04-26",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 4,
+    "home_team_abbr": "COL",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030165,
+    "date": "2025-04-28",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 5,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "COL"
+  },
+  {
+    "game_id": 2024030165,
+    "date": "2025-04-28",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 5,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "COL"
+  },
+  {
+    "game_id": 2024030166,
+    "date": "2025-05-01",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 6,
+    "home_team_abbr": "COL",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030166,
+    "date": "2025-05-01",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 6,
+    "home_team_abbr": "COL",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030167,
+    "date": "2025-05-03",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 7,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "COL"
+  },
+  {
+    "game_id": 2024030167,
+    "date": "2025-05-03",
+    "round": 1,
+    "api_series_idx": 6,
+    "game_num_in_series": 7,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "COL"
+  },
+  {
+    "game_id": 2024030171,
+    "date": "2025-04-20",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 1,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "MIN"
+  },
+  {
+    "game_id": 2024030171,
+    "date": "2025-04-20",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 1,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "MIN"
+  },
+  {
+    "game_id": 2024030172,
+    "date": "2025-04-22",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 2,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "MIN"
+  },
+  {
+    "game_id": 2024030172,
+    "date": "2025-04-22",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 2,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "MIN"
+  },
+  {
+    "game_id": 2024030173,
+    "date": "2025-04-24",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 3,
+    "home_team_abbr": "MIN",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030173,
+    "date": "2025-04-24",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 3,
+    "home_team_abbr": "MIN",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030174,
+    "date": "2025-04-26",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 4,
+    "home_team_abbr": "MIN",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030174,
+    "date": "2025-04-26",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 4,
+    "home_team_abbr": "MIN",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030175,
+    "date": "2025-04-29",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 5,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "MIN"
+  },
+  {
+    "game_id": 2024030175,
+    "date": "2025-04-29",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 5,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "MIN"
+  },
+  {
+    "game_id": 2024030176,
+    "date": "2025-05-01",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 6,
+    "home_team_abbr": "MIN",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030176,
+    "date": "2025-05-01",
+    "round": 1,
+    "api_series_idx": 7,
+    "game_num_in_series": 6,
+    "home_team_abbr": "MIN",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030181,
+    "date": "2025-04-21",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 1,
+    "home_team_abbr": "LAK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030181,
+    "date": "2025-04-21",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 1,
+    "home_team_abbr": "LAK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030182,
+    "date": "2025-04-23",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 2,
+    "home_team_abbr": "LAK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030182,
+    "date": "2025-04-23",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 2,
+    "home_team_abbr": "LAK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030183,
+    "date": "2025-04-25",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 3,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "LAK"
+  },
+  {
+    "game_id": 2024030183,
+    "date": "2025-04-25",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 3,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "LAK"
+  },
+  {
+    "game_id": 2024030184,
+    "date": "2025-04-27",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 4,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "LAK"
+  },
+  {
+    "game_id": 2024030184,
+    "date": "2025-04-27",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 4,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "LAK"
+  },
+  {
+    "game_id": 2024030185,
+    "date": "2025-04-29",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 5,
+    "home_team_abbr": "LAK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030185,
+    "date": "2025-04-29",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 5,
+    "home_team_abbr": "LAK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030186,
+    "date": "2025-05-01",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 6,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "LAK"
+  },
+  {
+    "game_id": 2024030186,
+    "date": "2025-05-01",
+    "round": 1,
+    "api_series_idx": 8,
+    "game_num_in_series": 6,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "LAK"
+  },
+  {
+    "game_id": 2024030211,
+    "date": "2025-05-05",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 1,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030211,
+    "date": "2025-05-05",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 1,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030212,
+    "date": "2025-05-07",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 2,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030212,
+    "date": "2025-05-07",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 2,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030213,
+    "date": "2025-05-09",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 3,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030213,
+    "date": "2025-05-09",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 3,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030214,
+    "date": "2025-05-11",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 4,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030214,
+    "date": "2025-05-11",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 4,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030215,
+    "date": "2025-05-14",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 5,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030215,
+    "date": "2025-05-14",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 5,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030216,
+    "date": "2025-05-16",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 6,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030216,
+    "date": "2025-05-16",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 6,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "TOR"
+  },
+  {
+    "game_id": 2024030217,
+    "date": "2025-05-18",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 7,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030217,
+    "date": "2025-05-18",
+    "round": 2,
+    "api_series_idx": 1,
+    "game_num_in_series": 7,
+    "home_team_abbr": "TOR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030221,
+    "date": "2025-05-06",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 1,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030221,
+    "date": "2025-05-06",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 1,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030222,
+    "date": "2025-05-08",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 2,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030222,
+    "date": "2025-05-08",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 2,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030223,
+    "date": "2025-05-10",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 3,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "WSH"
+  },
+  {
+    "game_id": 2024030223,
+    "date": "2025-05-10",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 3,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "WSH"
+  },
+  {
+    "game_id": 2024030224,
+    "date": "2025-05-12",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 4,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "WSH"
+  },
+  {
+    "game_id": 2024030224,
+    "date": "2025-05-12",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 4,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "WSH"
+  },
+  {
+    "game_id": 2024030225,
+    "date": "2025-05-15",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 5,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030225,
+    "date": "2025-05-15",
+    "round": 2,
+    "api_series_idx": 2,
+    "game_num_in_series": 5,
+    "home_team_abbr": "WSH",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030231,
+    "date": "2025-05-07",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 1,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030231,
+    "date": "2025-05-07",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 1,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030232,
+    "date": "2025-05-09",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 2,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030232,
+    "date": "2025-05-09",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 2,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030233,
+    "date": "2025-05-11",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 3,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030233,
+    "date": "2025-05-11",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 3,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030234,
+    "date": "2025-05-13",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 4,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030234,
+    "date": "2025-05-13",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 4,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030235,
+    "date": "2025-05-15",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 5,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030235,
+    "date": "2025-05-15",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 5,
+    "home_team_abbr": "WPG",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030236,
+    "date": "2025-05-17",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 6,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030236,
+    "date": "2025-05-17",
+    "round": 2,
+    "api_series_idx": 3,
+    "game_num_in_series": 6,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "WPG"
+  },
+  {
+    "game_id": 2024030241,
+    "date": "2025-05-06",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 1,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030241,
+    "date": "2025-05-06",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 1,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030242,
+    "date": "2025-05-08",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 2,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030242,
+    "date": "2025-05-08",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 2,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030243,
+    "date": "2025-05-10",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 3,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030243,
+    "date": "2025-05-10",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 3,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030244,
+    "date": "2025-05-12",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 4,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030244,
+    "date": "2025-05-12",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 4,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "VGK"
+  },
+  {
+    "game_id": 2024030245,
+    "date": "2025-05-14",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 5,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030245,
+    "date": "2025-05-14",
+    "round": 2,
+    "api_series_idx": 4,
+    "game_num_in_series": 5,
+    "home_team_abbr": "VGK",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030311,
+    "date": "2025-05-20",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 1,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030311,
+    "date": "2025-05-20",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 1,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030312,
+    "date": "2025-05-22",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 2,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030312,
+    "date": "2025-05-22",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 2,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030313,
+    "date": "2025-05-24",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 3,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030313,
+    "date": "2025-05-24",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 3,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030314,
+    "date": "2025-05-26",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 4,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030314,
+    "date": "2025-05-26",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 4,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030315,
+    "date": "2025-05-28",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 5,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030315,
+    "date": "2025-05-28",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 5,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030316,
+    "date": "2025-05-30",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 6,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030316,
+    "date": "2025-05-30",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 6,
+    "home_team_abbr": "FLA",
+    "away_team_abbr": "CAR"
+  },
+  {
+    "game_id": 2024030317,
+    "date": "2025-06-01",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 7,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030317,
+    "date": "2025-06-01",
+    "round": 3,
+    "api_series_idx": 1,
+    "game_num_in_series": 7,
+    "home_team_abbr": "CAR",
+    "away_team_abbr": "FLA"
+  },
+  {
+    "game_id": 2024030321,
+    "date": "2025-05-21",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 1,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030321,
+    "date": "2025-05-21",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 1,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030322,
+    "date": "2025-05-23",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 2,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030322,
+    "date": "2025-05-23",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 2,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030323,
+    "date": "2025-05-25",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 3,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030323,
+    "date": "2025-05-25",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 3,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030324,
+    "date": "2025-05-27",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 4,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030324,
+    "date": "2025-05-27",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 4,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030325,
+    "date": "2025-05-29",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 5,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030325,
+    "date": "2025-05-29",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 5,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030326,
+    "date": "2025-05-31",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 6,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030326,
+    "date": "2025-05-31",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 6,
+    "home_team_abbr": "EDM",
+    "away_team_abbr": "DAL"
+  },
+  {
+    "game_id": 2024030327,
+    "date": "2025-06-02",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 7,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "EDM"
+  },
+  {
+    "game_id": 2024030327,
+    "date": "2025-06-02",
+    "round": 3,
+    "api_series_idx": 2,
+    "game_num_in_series": 7,
+    "home_team_abbr": "DAL",
+    "away_team_abbr": "EDM"
+  }
+]

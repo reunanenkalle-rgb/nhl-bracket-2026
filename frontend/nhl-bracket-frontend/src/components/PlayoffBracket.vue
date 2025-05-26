@@ -155,11 +155,16 @@
   };
   
   
-  onMounted(() => {
-    if (bracketStore.allSeries.length === 0) {
-      bracketStore.fetchBracketStructure();
-    }
-  });
+  onMounted(async () => {
+  if (bracketStore.allSeries.length === 0) {
+    await bracketStore.fetchBracketStructure(); // Await this
+  }
+  // Fetch official results after structure is loaded, or on a timer/button
+  // For simplicity, fetch once after initial load.
+  if (bracketStore.allSeries.length > 0) { // Ensure structure is there
+      await bracketStore.fetchOfficialResults();
+  }
+});
   
   const handlePick = (seriesId: number, winningTeamId: number | null) => {
     bracketStore.successMessage = null;

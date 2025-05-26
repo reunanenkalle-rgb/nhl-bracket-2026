@@ -206,6 +206,53 @@ def get_players():
     return jsonify([{"id": player.id, "name": player.name} for player in players])
 
 
+@app.route("/api/official_results", methods=["GET"])
+def get_official_results():
+    print("API: Request received for /api/official_results")  # Diagnostic
+    try:
+        # Query all series, ordered by round and then by their ID or identifier for consistency
+        # The update_official_results.py script should have populated the relevant fields
+        series_list = Series.query.order_by(Series.round_number, Series.id).all()
+        output = []
+        for s in series_list:
+            s_data = {
+                "id": s.id,  # DB Series ID
+                "series_identifier": s.series_identifier,  # Your internal identifier (e.g., EC_R1_M1)
+                "round_number": s.round_number,
+                "description": s.description,
+                "status": s.status,  # PENDING, ACTIVE, COMPLETED (updated by your script)
+                "team1_id": s.team1_id,
+                "team1_name": s.team1.name if s.team1 else None,
+                "team1_abbr": s.team1.abbreviation if s.team1 else None,
+                "team1_logo": s.team1.logo_url if s.team1 else None,
+                "games_team1_won": s.games_team1_won,  # Official games won by team1
+                "team2_id": s.team2_id,
+                "team2_name": s.team2.name if s.team2 else None,
+                "team2_abbr": s.team2.abbreviation if s.team2 else None,
+                "team2_logo": s.team2.logo_url if s.team2 else None,
+                "games_team2_won": s.games_team2_won,  # Official games won by team2
+                "actual_winner_team_id": s.actual_winner_team_id,  # ID of the team that won the series
+            }
+            output.append(s_data)
+
+        print(f"API: Sending {len(output)} series with official results.")  # Diagnostic
+        return jsonify(output)
+    except Exception as e:
+        print(f"API Error in /api/official_results: {e}")
+        import traceback
+
+        traceback.print_exc()
+        return (
+            jsonify(
+                {
+                    "error": "Failed to retrieve official playoff results",
+                    "details": str(e),
+                }
+            ),
+            500,
+        )
+
+
 @app.route("/api/playoff_bracket_structure", methods=["GET"])
 def get_playoff_bracket_structure():
     print(

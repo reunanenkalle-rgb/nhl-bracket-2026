@@ -22,13 +22,15 @@ interface AdvancingTeamDetails {
 
 export interface BracketState {
   allSeries: Series[];
-  originalSeriesData: Readonly<Series[]>;
-  userPicks: Map<number, number | null>; // Key: series.id, Value: predicted_winner_team_id | null
+  originalSeriesData: Readonly<Series[]>; // For initial structure
+  userPicks: Map<number, number | null>;
   playerName: string;
   isLoading: boolean;
+  isLoadingResults: boolean; // New: for loading official results specifically
   error: string | null;
+  successMessage: string | null; // From previous step
   isBracketCompletelyPicked: boolean;
-  successMessage: string | null; // New state for success messages
+  // lastResultsFetchTimestamp: number | null; // Optional: to avoid over-fetching
 }
 
 export const useBracketStore = defineStore('bracket', {
@@ -38,6 +40,7 @@ export const useBracketStore = defineStore('bracket', {
     userPicks: new Map(),
     playerName: '',
     isLoading: false,
+    isLoadingResults: false, // New: for loading official results specifically
     error: null,
     isBracketCompletelyPicked: false,
     successMessage: null, // Initialize successMessage
@@ -104,6 +107,58 @@ export const useBracketStore = defineStore('bracket', {
         this.isLoading = false;
       }
     },
+
+    async fetchOfficialResults(forceFetch: boolean = false) {
+      // Optional: Add logic to avoid fetching too frequently
+      // const now = Date.now();
+      // if (!forceFetch && this.lastResultsFetchTimestamp && (now - this.lastResultsFetchTimestamp < 60000)) { // e.g., 1 minute cooldown
+      //     console.log("Skipping official results fetch; recently updated.");
+      //     return;
+      // }
+
+      this.isLoadingResults = true;
+      // this.error = null; // Keep general error for structure loading separate or combine
+      try {
+          const response = await apiService.getOfficialResults();
+          const officialResultsData = response.data;
+
+          if (this.allSeries.length === 0) {
+              // If bracket structure hasn't been loaded yet, this is problematic.
+              // For now, we assume fetchBracketStructure has run or will run.
+              // Or, this function could populate allSeries if it's empty.
+              // Let's merge into existing allSeries.
+              console.warn("Fetching official results, but allSeries is empty. Ensure bracket structure is loaded first or simultaneously.");
+          }
+
+          // Merge official results into the existing allSeries state
+          officialResultsData.forEach(officialSeries => {
+              const existingSeries = this.allSeries.find(s => s.id === officialSeries.id);
+              if (existingSeries) {
+                  existingSeries.status = officialSeries.status;
+                  existingSeries.games_team1_won = officialSeries.games_team1_won;
+                  existingSeries.games_team2_won = officialSeries.games_team2_won;
+                  existingSeries.actual_winner_team_id = officialSeries.actual_winner_team_id;
+
+                  // If series is completed, and teams for next round were TBD,
+                  // this is where you might trigger an update to those TBD teams in allSeries
+                  // This can get complex and might be better handled by re-evaluating propagation
+                  // or having `updateAdvancingTeams` re-run.
+                  // For now, this just updates the current series' official data.
+              } else {
+                  // This case should ideally not happen if allSeries is populated from a similar source.
+                  // If it does, you might need to add the series or handle it.
+                  console.warn(`Official result for series ID ${officialSeries.id} (${officialSeries.series_identifier}) not found in local allSeries state.`);
+              }
+          });
+          // this.lastResultsFetchTimestamp = Date.now();
+          console.log("Official results merged into bracket state.");
+      } catch (err) {
+          console.error("Error fetching official results:", err);
+          // this.error = "Failed to fetch official results."; // Or a specific error state
+      } finally {
+          this.isLoadingResults = false;
+      }
+  },
 
     makePick(seriesId: number, predictedWinnerTeamId: number | null) {
       const series = this.allSeries.find(s => s.id === seriesId);

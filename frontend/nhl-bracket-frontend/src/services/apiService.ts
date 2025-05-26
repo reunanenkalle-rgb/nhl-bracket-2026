@@ -43,6 +43,10 @@ export default {
         // The submissionPayload already contains player_name and picks array
         // as expected by the backend endpoint designed earlier.
         return apiClient.post('/bracket_submissions', submissionPayload);
+    },
+
+    getOfficialResults(): Promise<AxiosResponse<Series[]>> {
+        return apiClient.get('/official_results');
     }
 
     // You can add more functions here as your app grows, for example:
