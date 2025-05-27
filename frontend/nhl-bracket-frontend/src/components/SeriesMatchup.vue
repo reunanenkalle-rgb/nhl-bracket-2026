@@ -185,9 +185,11 @@ const isActualWinner = (teamId: number | null) => {
 }
 
 .team.actual-winner {
-  /* If you want a distinct style for actual winners that overrides/combines */
-  /* For example, a thicker border or a small icon */
-  /* border-left: 3px solid gold !important; */ /* Important might be needed to override other borders */
+  /* Example: gold bar for actual winner, you can customize this */
+  border-left: 3px solid gold !important; /* Added !important for testing, remove if not needed */
+  padding-left: 7px !important; /* Adjust padding. Added !important for testing */
+  /* You could also try a very obvious background for testing: */
+  /* background-color: yellow !important; */
 }
 
 .team-logo {

@@ -6,6 +6,8 @@ import time
 import traceback
 import requests
 import json
+from app import app  # Still need 'app' from app.py for its config and app_context
+from models import db, Team, Series  # Import db and models from models.py
 
 # Add parent directory to sys.path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -55,9 +57,9 @@ def fetch_and_update_playoff_results():
         response.raise_for_status()
         api_data = response.json()
         print("Successfully fetched data from NHL carousel API.")
-    except Exception as e:  # Catching generic exception for requests and json decoding
+    except Exception as e:
         print(f"Error fetching or decoding data from NHL API: {e}")
-        if "response" in locals() and response is not None:
+        if "response" in locals() and response is not None:  # Check if response exists
             print(f"Response text (first 500 chars): {response.text[:500]}...")
         traceback.print_exc()
         return
@@ -101,29 +103,28 @@ def fetch_and_update_playoff_results():
                     )
                     continue
 
+                # Wrap processing of a single API series in a try-except
                 try:
                     top_seed_api_info = api_series_details.get("topSeed", {})
                     bottom_seed_api_info = api_series_details.get("bottomSeed", {})
 
                     api_top_seed_abbr = top_seed_api_info.get("abbrev")
-                    api_top_seed_id_carousel = top_seed_api_info.get(
-                        "id"
-                    )  # API's own ID for this team
+                    api_top_seed_id_carousel = top_seed_api_info.get("id")
                     api_top_seed_wins = top_seed_api_info.get("wins", 0)
 
                     api_bottom_seed_abbr = bottom_seed_api_info.get("abbrev")
-                    api_bottom_seed_id_carousel = bottom_seed_api_info.get(
-                        "id"
-                    )  # API's own ID
+                    api_bottom_seed_id_carousel = bottom_seed_api_info.get("id")
                     api_bottom_seed_wins = bottom_seed_api_info.get("wins", 0)
 
                     if not api_top_seed_abbr or not api_bottom_seed_abbr:
                         print(
-                            f"  Warning: API data for series '{series_letter}' (DB: {db_series_identifier}) is missing team abbreviations. Skipping."
+                            f"  Warning: API data for series '{series_letter}' (DB: {db_series_identifier}) is missing team abbreviations. Skipping this series instance."
+                        )
+                        errors_count += (
+                            1  # Count as an error for this series processing
                         )
                         continue
 
-                    # Get DB Team objects using their abbreviations
                     db_team_obj_api_top = Team.query.filter_by(
                         abbreviation=api_top_seed_abbr
                     ).first()
@@ -135,40 +136,38 @@ def fetch_and_update_playoff_results():
                         print(
                             f"  Warning: Could not find one or both teams ('{api_top_seed_abbr}', '{api_bottom_seed_abbr}') in DB by abbreviation for series '{db_series_identifier}'. Skipping this series update."
                         )
+                        errors_count += 1
                         continue
 
-                    # --- Update teams for later rounds if they were TBD in DB ---
                     teams_were_updated_in_db = False
                     if (
                         db_series.round_number > 0
-                    ):  # Applicable to all rounds if seeding could be incomplete
+                    ):  # Check if teams in DB need to be set (for R2+ mostly)
+                        # Standard way to assign Top Seed to Team1, Bottom Seed to Team2 if both are unset
                         if db_series.team1_id is None and db_series.team2_id is None:
-                            # Assign API's top seed to DB's team1, bottom seed to DB's team2
-                            # This assignment order matters for games_team1_won vs games_team2_won later
                             db_series.team1_id = db_team_obj_api_top.id
                             db_series.team2_id = db_team_obj_api_bottom.id
                             teams_were_updated_in_db = True
                             print(
                                 f"    Set teams for '{db_series_identifier}': {db_team_obj_api_top.abbreviation} (as T1) vs {db_team_obj_api_bottom.abbreviation} (as T2)"
                             )
-                        elif (
-                            db_series.team1_id is None
-                            and db_series.team2_id != db_team_obj_api_top.id
+                        # If one team is set, set the other if it's different and available
+                        elif db_series.team1_id is None and (
+                            db_series.team2_id != db_team_obj_api_top.id
+                            if db_series.team2_id
+                            else True
                         ):
-                            db_series.team1_id = (
-                                db_team_obj_api_top.id
-                            )  # Assuming top seed fills first available TBD slot
+                            db_series.team1_id = db_team_obj_api_top.id
                             teams_were_updated_in_db = True
                             print(
                                 f"    Set team1 for '{db_series_identifier}' to {db_team_obj_api_top.abbreviation}"
                             )
-                        elif (
-                            db_series.team2_id is None
-                            and db_series.team1_id != db_team_obj_api_bottom.id
+                        elif db_series.team2_id is None and (
+                            db_series.team1_id != db_team_obj_api_bottom.id
+                            if db_series.team1_id
+                            else True
                         ):
-                            db_series.team2_id = (
-                                db_team_obj_api_bottom.id
-                            )  # Assuming bottom seed fills second TBD
+                            db_series.team2_id = db_team_obj_api_bottom.id
                             teams_were_updated_in_db = True
                             print(
                                 f"    Set team2 for '{db_series_identifier}' to {db_team_obj_api_bottom.abbreviation}"
@@ -176,20 +175,16 @@ def fetch_and_update_playoff_results():
 
                         if teams_were_updated_in_db:
                             teams_assigned_to_series_count += 1
-                            # Important: If we just set teams, commit to get relationships updated before proceeding
-                            # However, this is inefficient. Better to reload relationship or ensure IDs are used carefully.
-                            # For now, we'll rely on the re-fetched db_series.team1 and db_series.team2 below.
-                            # If this causes issues, a db.session.flush() + refresh(db_series) might be needed here.
+                            # Flush to ensure subsequent .team1 and .team2 relationships are fresh if IDs were just set.
+                            # This helps if the relationships aren't automatically updated before access.
+                            db.session.flush()
 
-                    # Fetch the series' teams as defined in *our* database
-                    # These might have just been updated above for R2+
                     db_series_team1 = db_series.team1
                     db_series_team2 = db_series.team2
 
                     if not db_series_team1 or not db_series_team2:
                         print(
-                            f"  ERROR: Teams for series '{db_series_identifier}' (Round {db_series.round_number}) "
-                            f"are not set in DB, even after attempting to populate. Cannot assign wins."
+                            f"  ERROR: Teams for series '{db_series_identifier}' (Round {db_series.round_number}) are not set in DB. Cannot assign wins."
                         )
                         errors_count += 1
                         continue
@@ -202,24 +197,42 @@ def fetch_and_update_playoff_results():
                         db_series.games_team1_won = api_bottom_seed_wins
                         db_series.games_team2_won = api_top_seed_wins
                     else:
-                        # This means the teams in the DB for this series_identifier do not match
-                        # the teams the API carousel says are in this seriesLetter slot.
-                        # This could happen if your API_SERIES_LETTER_TO_DB_MAP is wrong,
-                        # or if your initial seeding of team1/team2 for R1 was different from API's top/bottom.
-                        print(
-                            f"  CRITICAL MISMATCH: For DB series '{db_series_identifier}' ({db_series_team1.abbreviation} vs {db_series_team2.abbreviation}), "
-                            f"API reports teams '{api_top_seed_abbr}' vs '{api_bottom_seed_abbr}'. Cannot reliably assign scores."
-                        )
-                        errors_count += 1
-                        continue  # Skip score update for this series to avoid incorrect data
+                        # This occurs if db_series.team1 is neither API top nor bottom seed.
+                        # This implies the mapping of API top/bottom to db.team1/team2 established
+                        # when setting TBD teams was different from this game's top/bottom.
+                        # A robust solution checks if db_series.team2 matches one of them.
+                        if (
+                            db_series_team2.abbreviation == api_top_seed_abbr
+                        ):  # db_series.team2 is API topSeed
+                            db_series.games_team2_won = api_top_seed_wins
+                            db_series.games_team1_won = api_bottom_seed_wins  # so db_series.team1 must be API bottomSeed
+                        elif (
+                            db_series_team2.abbreviation == api_bottom_seed_abbr
+                        ):  # db_series.team2 is API bottomSeed
+                            db_series.games_team2_won = api_bottom_seed_wins
+                            db_series.games_team1_won = api_top_seed_wins  # so db_series.team1 must be API topSeed
+                        else:
+                            print(
+                                f"  CRITICAL MISMATCH: For DB series '{db_series_identifier}' ({db_series_team1.abbreviation} vs {db_series_team2.abbreviation}), "
+                                f"API reports teams '{api_top_seed_abbr}' vs '{api_bottom_seed_abbr}'. Cannot reliably assign scores from this record."
+                            )
+                            errors_count += 1
+                            # Potentially skip updating scores for this series to avoid bad data
+                            # For now, we'll let it proceed to status determination which might default to PENDING.
+                            # continue # Uncomment to skip this series if scores can't be mapped.
 
                     # Update status and actual winner
                     api_winning_team_carousel_id = api_series_details.get(
                         "winningTeamId"
                     )
+
+                    db_series.actual_winner_team_id = (
+                        None  # Reset for each processing pass
+                    )
+                    db_series.status = "PENDING"  # Default to PENDING
+
                     if api_winning_team_carousel_id:
                         db_series.status = "COMPLETED"
-                        # Determine winning abbreviation from API data
                         winning_abbr_from_api = None
                         if api_winning_team_carousel_id == api_top_seed_id_carousel:
                             winning_abbr_from_api = api_top_seed_abbr
@@ -242,29 +255,69 @@ def fetch_and_update_playoff_results():
                             print(
                                 f"  Warning: Could not determine winning team abbreviation from API winning ID {api_winning_team_carousel_id} for series '{db_series_identifier}'."
                             )
-                    elif db_series.games_team1_won > 0 or db_series.games_team2_won > 0:
-                        db_series.status = "ACTIVE"
-                    else:  # No wins recorded yet, but teams might be set for R1
-                        db_series.status = "PENDING"
 
+                    # If API doesn't declare a winner, check our game counts
+                    # This logic now correctly comes *after* checking the API's explicit winner
+                    # And ensures status is COMPLETED only if 4 wins are reached AND API didn't already say so.
+                    if (
+                        db_series.status != "COMPLETED"
+                    ):  # Only if not already marked complete by API
+                        if db_series.games_team1_won == 4:
+                            db_series.status = "COMPLETED"
+                            if db_series.team1_id:
+                                db_series.actual_winner_team_id = db_series.team1_id
+                            else:  # Should ideally not happen if teams are set
+                                print(
+                                    f"  Warning: Series {db_series_identifier} team1_id is None, cannot set derived winner based on games_team1_won."
+                                )
+                        elif db_series.games_team2_won == 4:
+                            db_series.status = "COMPLETED"
+                            if db_series.team2_id:
+                                db_series.actual_winner_team_id = db_series.team2_id
+                            else:  # Should ideally not happen
+                                print(
+                                    f"  Warning: Series {db_series_identifier} team2_id is None, cannot set derived winner based on games_team2_won."
+                                )
+
+                    # If still not completed, check if active
+                    if db_series.status != "COMPLETED":
+                        if (
+                            db_series.games_team1_won is not None
+                            and db_series.games_team1_won > 0
+                        ) or (
+                            db_series.games_team2_won is not None
+                            and db_series.games_team2_won > 0
+                        ):
+                            db_series.status = "ACTIVE"
+                            # db_series.actual_winner_team_id remains None (already reset)
+                        else:  # No wins yet, could be PENDING (already default)
+                            # db_series.status = "PENDING"; # Already default
+                            db_series.actual_winner_team_id = None
+
+                    # This print and counter should be outside the status determination logic,
+                    # but inside the try block for processing a single series.
                     print(
                         f"  Processed Series: {db_series.series_identifier} (API: {series_letter}) R:{db_series.round_number} - "
-                        f"{db_series_team1.abbreviation} ({db_series.games_team1_won}) vs "
-                        f"{db_series_team2.abbreviation} ({db_series.games_team2_won}) - Status: {db_series.status}"
+                        f"{db_series_team1.abbreviation if db_series_team1 else 'TBD'} ({db_series.games_team1_won if db_series.games_team1_won is not None else 'N/A'}) vs "
+                        f"{db_series_team2.abbreviation if db_series_team2 else 'TBD'} ({db_series.games_team2_won if db_series.games_team2_won is not None else 'N/A'}) - Status: {db_series.status}"
                     )
                     updated_series_count += 1
 
-                except Exception as series_err:
+                except (
+                    Exception
+                ) as series_err:  # This except matches the try for a single series_details
                     print(
-                        f"  Error processing API series '{series_letter}' (DB ID: '{db_series_identifier}'): {series_err}"
+                        f"  Error processing API series details for '{series_letter}' (DB ID: '{db_series_identifier}'): {series_err}"
                     )
                     traceback.print_exc()
                     errors_count += 1
 
+        # Commit block after processing all series in all rounds
         if (
             updated_series_count > 0
             or teams_assigned_to_series_count > 0
-            or errors_count > 0
+            or errors_count
+            > 0  # Commit even if there were errors to save partial successes or rollbacks from errors
         ):
             try:
                 db.session.commit()
@@ -282,7 +335,9 @@ def fetch_and_update_playoff_results():
             print("\nNo series data was changed or added to the database.")
 
         if errors_count > 0:
-            print(f"Encountered {errors_count} errors during processing.")
+            print(
+                f"Encountered {errors_count} errors during individual series processing."
+            )
 
 
 if __name__ == "__main__":

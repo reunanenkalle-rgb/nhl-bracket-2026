@@ -2,6 +2,8 @@
 
 import sys
 import os
+from app import app  # Still need 'app' from app.py for its config and app_context
+from models import db, Team, Series  # Import db and models from models.py
 
 # This makes sure the script can find the 'app' module in the parent 'backend' directory
 # Adjust if your script is in the same directory as app.py

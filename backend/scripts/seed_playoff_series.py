@@ -3,6 +3,8 @@
 import sys
 import os
 import json
+from app import app  # Still need 'app' from app.py for its config and app_context
+from models import db, Team, Series  # Import db and models from models.py
 
 # This makes sure the script can find the 'app' module in the parent 'backend' directory
 current_dir = os.path.dirname(os.path.abspath(__file__))
