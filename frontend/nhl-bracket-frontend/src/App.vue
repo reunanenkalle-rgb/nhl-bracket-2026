@@ -1,14 +1,43 @@
 <template>
   <div id="app-container"> <header>
       <h1>LoLa Viralline  NHL Playoff Bracket Challenge</h1>
-      </header>
+      <nav v-if="playoffsStarted"> {/* Conditionally render nav */}
+        <RouterLink to="/">Bracket Entry</RouterLink>
+        <RouterLink to="/leaderboard">Leaderboard</RouterLink>
+        {/* Add other links here as needed */}
+      </nav>
+      <nav v-else>
+        <RouterLink to="/">Make Your Picks!</RouterLink>
+        {/* You could have a message here like "Leaderboard available after playoffs start" */}
+      </nav>
+    </header>
     <main>
-      <RouterView /> </main>
+      <RouterView />
+    </main>
+    <footer>
+      <p>&copy; {{ new Date().getFullYear() }} NHL Bracket App</p>
+    </footer>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { RouterView, RouterLink } from 'vue-router'; // RouterLink is optional for now
+import { RouterLink, RouterView } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import apiService from '@/services/apiService'; // Import your apiService
+
+const playoffsStarted = ref(false); // Default to false until fetched
+
+onMounted(async () => {
+  try {
+    const response = await apiService.getPlayoffStatus();
+    playoffsStarted.value = response.data.playoffs_started;
+    console.log("Playoffs started status from API:", playoffsStarted.value);
+  } catch (error) {
+    console.error("Failed to fetch playoff status:", error);
+    // Decide on a fallback, e.g., keep it false or show an error
+    playoffsStarted.value = false; // Fallback on error
+  }
+});
 </script>
 
 <style>
@@ -61,23 +90,30 @@ header h1 {
   font-size: 1.8em;
 }
 
-/* Optional: Styles for navigation if you add RouterLinks */
-/*
 nav {
   text-align: center;
-  margin-top: 10px;
+  padding-bottom: 5px;
+  margin-top: 10px; /* Add some space from h1 if nav is present */
 }
+
 nav a {
-  color: #f0f2f5;
-  margin: 0 10px;
+  color: #e0e0e0;
+  margin: 0 15px;
   text-decoration: none;
   font-weight: 500;
+  font-size: 1em;
+  padding: 5px 0;
+  transition: color 0.2s ease;
 }
-nav a.router-link-exact-active {
+
+nav a:hover {
   color: #ffc107;
+}
+
+nav a.router-link-exact-active {
+  color: #ffffff;
   border-bottom: 2px solid #ffc107;
 }
-*/
 
 #app-container main {
   background-color: #ffffff; /* White background for main content area */

@@ -6,8 +6,15 @@ import type {
     Team,
     Series,
     BracketSubmissionApiPayload, // Use the new payload type
-    BracketSubmissionApiResponse // Use the new response type
+    BracketSubmissionApiResponse, // Use the new response type
+    LeaderboardEntry,
+    DetailedBracketView
 } from '@/types'; // Ensure this path is correct
+
+// Define type for playoff status response
+export interface PlayoffStatusResponse {
+    playoffs_started: boolean;
+  }
 
 const apiClient = axios.create({
     baseURL: 'http://localhost:5000/api', // Your Flask backend URL
@@ -47,7 +54,21 @@ export default {
 
     getOfficialResults(): Promise<AxiosResponse<Series[]>> {
         return apiClient.get('/official_results');
-    }
+    },
+
+    getLeaderboard(): Promise<AxiosResponse<LeaderboardEntry[]>> {
+        return apiClient.get('/leaderboard');
+        },
+
+    getPlayoffStatus(): Promise<AxiosResponse<PlayoffStatusResponse>> {
+        return apiClient.get('/playoff_status');
+        },
+
+    getSubmissionDetails(submissionId: number | string): Promise<AxiosResponse<DetailedBracketView>> {
+        return apiClient.get(`/bracket_submissions/${submissionId}`);
+        }
+
+
 
     // You can add more functions here as your app grows, for example:
     // getSubmittedBracket(submissionId: number): Promise<AxiosResponse<FullBracketDetails>> {

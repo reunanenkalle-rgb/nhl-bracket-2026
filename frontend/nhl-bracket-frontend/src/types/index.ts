@@ -68,3 +68,52 @@ export interface BracketSubmissionApiResponse {
   submission_id: number;
   // You might also include the full submitted bracket details if backend returns them
 }
+
+export interface LeaderboardEntry {
+  submission_id: number;
+  player_name: string;
+  score: number;
+  percentage_correct: number;
+  correct_picks: number;
+  completed_series: number;
+  stanley_cup_pick_abbr: string | null;
+  stanley_cup_pick_logo_url: string | null;
+}
+
+export interface ViewedPickDetail {
+  series_id: number;
+  series_identifier: string;
+  description: string;
+  round_number: number;
+  
+  series_team1_abbr: string | null;
+  series_team1_logo: string | null;
+  series_team2_abbr: string | null;
+  series_team2_logo: string | null;
+  
+  predicted_winner_team_id: number | null;
+  predicted_winner_abbr: string | null;
+  predicted_winner_logo: string | null;
+  
+  actual_winner_team_id: number | null;
+  actual_winner_abbr: string | null;
+  actual_winner_logo: string | null;
+  
+  games_team1_won?: number;
+  games_team2_won?: number;
+  series_status: string; // e.g., 'PENDING', 'ACTIVE', 'COMPLETED'
+  is_pick_correct: boolean | null; // true, false, or null if series not completed or no pick
+}
+
+export interface DetailedBracketView {
+  submission_id: number;
+  player_name: string;
+  bracket_name: string | null;
+  submission_timestamp: string | null; // ISO date string
+  score: number;
+  // You might also get these from the leaderboard endpoint or calculate on front-end based on picks
+  // percentage_correct?: number; 
+  // correct_picks?: number;
+  // completed_series?: number;
+  picks: ViewedPickDetail[]; // Array of all picks with series info and results
+}

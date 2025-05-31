@@ -12,7 +12,12 @@ import traceback
 from models import db, Player, Team, Series, BracketSubmission, Pick
 
 # Import the scoring function
-from scoring import calculate_submission_score
+from scoring import (
+    calculate_submission_stats,
+    get_stanley_cup_pick_details_for_submission,
+)
+
+# Create Flask app
 
 app = Flask(__name__)  # Create Flask app instance
 CORS(app)
@@ -189,23 +194,61 @@ def get_leaderboard():
     try:
         submissions = (
             BracketSubmission.query.all()
-        )  # Uses BracketSubmission from models.py
+        )  # Or filter for active/valid submissions
         leaderboard_data = []
+
+        # Pre-fetch all series once to calculate total_completed_series_in_playoffs efficiently
+        # This count is now done within calculate_submission_stats, which is fine for moderate numbers of submissions.
+        # If performance becomes an issue with many submissions, total_completed_series_in_playoffs
+        # could be calculated once here and passed to an adapted calculate_submission_stats.
+
         for sub in submissions:
-            score = calculate_submission_score(sub.id)  # Uses imported function
+            stats = calculate_submission_stats(
+                sub.id
+            )  # Gets score, correct_picks, total_completed, percentage
+            sc_pick_details = get_stanley_cup_pick_details_for_submission(sub.id)
+
             player_name = sub.player.name if sub.player else "Unknown Player"
+
             leaderboard_data.append(
-                {"submission_id": sub.id, "player_name": player_name, "score": score}
+                {
+                    "submission_id": sub.id,
+                    "player_name": player_name,
+                    "score": stats["score"],
+                    "percentage_correct": stats["percentage_correct"],  # e.g., 75.0
+                    "correct_picks": stats["correct_picks_for_completed"],  # e.g., 6
+                    "completed_series": stats[
+                        "total_completed_series_in_playoffs"
+                    ],  # e.g., 8
+                    "stanley_cup_pick_abbr": (
+                        sc_pick_details.get("team_abbr") if sc_pick_details else None
+                    ),
+                    "stanley_cup_pick_logo_url": (
+                        sc_pick_details.get("logo_url") if sc_pick_details else None
+                    ),
+                }
             )
-        leaderboard_data.sort(key=lambda x: (-x["score"], x["player_name"]))
+
+        # Sort by score descending, then by percentage correct descending, then by player name ascending
+        leaderboard_data.sort(
+            key=lambda x: (-x["score"], -x["percentage_correct"], x["player_name"])
+        )
+
         return jsonify(leaderboard_data)
-    except Exception as e:  # General exception handling
+    except Exception as e:
         app.logger.error(f"Error generating leaderboard: {e}")
         traceback.print_exc()
         return (
             jsonify({"error": "Could not generate leaderboard", "details": str(e)}),
             500,
         )
+
+
+# Your other routes (get_submission_details, etc.) would also use calculate_submission_stats
+# if they need to display the score and percentage for an individual bracket.
+# For example, in get_submission_details:
+#   stats = calculate_submission_stats(submission_id)
+#   return jsonify({ ..., "score": stats["score"], "percentage_correct": stats["percentage_correct"], ...})
 
 
 @app.route("/api/bracket_submissions/<int:submission_id>", methods=["GET"])
@@ -216,7 +259,7 @@ def get_submission_details(submission_id):
         submission = BracketSubmission.query.get_or_404(submission_id)
         # ... (rest of your function as per Turn 44, ensuring models are used correctly) ...
         player_name = submission.player.name if submission.player else "Unknown Player"
-        submission_score = calculate_submission_score(submission_id)
+        submission_score = calculate_submission_stats(submission_id)
         picks_details = []
         for pick in submission.picks:
             series = Series.query.get(pick.series_id)
@@ -307,6 +350,33 @@ def get_submission_details(submission_id):
         )
 
 
+@app.route("/api/playoff_status", methods=["GET"])
+def get_playoff_status():
+    try:
+        # Check if any series has recorded games won by either team
+        # or if any series is marked as ACTIVE or COMPLETED
+        active_or_completed_series = Series.query.filter(
+            (Series.games_team1_won > 0)
+            | (Series.games_team2_won > 0)
+            | (Series.status == "ACTIVE")
+            | (Series.status == "COMPLETED")
+        ).first()  # .first() is efficient, we only need to know if at least one exists
+
+        playoffs_have_started = active_or_completed_series is not None
+
+        # You might also want to add a manual override or a specific "lock date" from config
+        # For now, this data-driven check is good.
+
+        return jsonify({"playoffs_started": playoffs_have_started})
+    except Exception as e:
+        app.logger.error(f"Error fetching playoff status: {e}")
+        traceback.print_exc()
+        return (
+            jsonify({"error": "Could not determine playoff status", "details": str(e)}),
+            500,
+        )
+
+
 @app.route("/api/bracket_submissions_list", methods=["GET"])
 def get_all_submissions_list():
     # ... (your existing logic using calculate_submission_score and models from models.py) ...
@@ -327,7 +397,7 @@ def get_all_submissions_list():
                         if sub.submission_timestamp
                         else None
                     ),
-                    "score": calculate_submission_score(sub.id),
+                    "score": calculate_submission_stats(sub.id),
                 }
             )
         return jsonify(output)

@@ -6,7 +6,9 @@ import type {
     Series,
     TeamShort,                // Now correctly defined and imported
     PickPayload,              // Import PickPayload for individual picks
-    BracketSubmissionApiPayload // Import the payload type for API submission
+    BracketSubmissionApiPayload, // Import the payload type for API submission
+    LeaderboardEntry,
+    DetailedBracketView
 } from '@/types';
 import apiService from '@/services/apiService';
 import { progressionMap } from '@/bracketLogic/progressionMap';
@@ -30,6 +32,10 @@ export interface BracketState {
   error: string | null;
   successMessage: string | null; // From previous step
   isBracketCompletelyPicked: boolean;
+  leaderboard: LeaderboardEntry[];
+  isLoadingLeaderboard: boolean;
+  viewedBracket: DetailedBracketView | null;
+  isLoadingViewedBracket: boolean;
   // lastResultsFetchTimestamp: number | null; // Optional: to avoid over-fetching
 }
 
@@ -44,6 +50,10 @@ export const useBracketStore = defineStore('bracket', {
     error: null,
     isBracketCompletelyPicked: false,
     successMessage: null, // Initialize successMessage
+    leaderboard: [],
+    isLoadingLeaderboard: false,
+    viewedBracket: null,
+    isLoadingViewedBracket: false,
   }),
 
   getters: {
@@ -105,6 +115,35 @@ export const useBracketStore = defineStore('bracket', {
         console.error(err);
       } finally {
         this.isLoading = false;
+      }
+    },
+
+    async fetchLeaderboard() {
+      this.isLoadingLeaderboard = true;
+      try {
+        const response = await apiService.getLeaderboard();
+        this.leaderboard = response.data;
+      } catch (error) {
+        console.error("Failed to fetch leaderboard:", error);
+        // Handle error display
+      } finally {
+        this.isLoadingLeaderboard = false;
+      }
+    },
+    
+    async fetchSubmissionDetails(submissionId: number | string) {
+      this.isLoadingViewedBracket = true;
+      this.viewedBracket = null; // Clear previous
+      // this.error = null; // Or use a specific error state for this action
+      try {
+        const response = await apiService.getSubmissionDetails(submissionId);
+        this.viewedBracket = response.data;
+      } catch (err) {
+        console.error(`Failed to fetch submission details for ID ${submissionId}:`, err);
+        // this.error = `Failed to load bracket (ID: ${submissionId}).`;
+        // Or set a specific error for this view
+      } finally {
+        this.isLoadingViewedBracket = false;
       }
     },
 
