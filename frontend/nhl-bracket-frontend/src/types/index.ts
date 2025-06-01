@@ -112,8 +112,8 @@ export interface DetailedBracketView {
   submission_timestamp: string | null; // ISO date string
   score: number;
   // You might also get these from the leaderboard endpoint or calculate on front-end based on picks
-  // percentage_correct?: number; 
-  // correct_picks?: number;
-  // completed_series?: number;
+  percentage_correct: number; 
+  correct_picks_count: number;
+  total_completed_series_count: number;
   picks: ViewedPickDetail[]; // Array of all picks with series info and results
 }

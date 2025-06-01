@@ -258,8 +258,8 @@ def get_submission_details(submission_id):
     try:
         submission = BracketSubmission.query.get_or_404(submission_id)
         # ... (rest of your function as per Turn 44, ensuring models are used correctly) ...
-        player_name = submission.player.name if submission.player else "Unknown Player"
-        submission_score = calculate_submission_stats(submission_id)
+        player_name = submission.player.name if submission.player else "Unknown Player"  # type: ignore
+        stats = calculate_submission_stats(submission_id)
         picks_details = []
         for pick in submission.picks:
             series = Series.query.get(pick.series_id)
@@ -332,7 +332,15 @@ def get_submission_details(submission_id):
                     if submission.submission_timestamp
                     else None
                 ),
-                "score": submission_score,
+                # Unpack the stats here:
+                "score": stats["score"],
+                "percentage_correct": stats["percentage_correct"],
+                "correct_picks_count": stats[
+                    "correct_picks_for_completed"
+                ],  # Use consistent key from stats dict
+                "total_completed_series_count": stats[
+                    "total_completed_series_in_playoffs"
+                ],  # Use consistent key
                 "picks": picks_details,
             }
         )

@@ -6,21 +6,25 @@ import time
 import traceback
 import requests
 import json
-from app import app  # Still need 'app' from app.py for its config and app_context
-from models import db, Team, Series  # Import db and models from models.py
 
-# Add parent directory to sys.path
+# --- Path Setup ---
+# Add parent directory (backend) to sys.path to allow importing 'app' and 'models'
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 if parent_dir not in sys.path:
-    sys.path.append(parent_dir)
+    sys.path.insert(0, parent_dir)  # Insert at the beginning
 
+# --- Application Imports ---
 try:
-    from app import app, db, Team, Series
+    from app import app  # For app context and config
+    from models import db, Team, Series  # For database models
 except ImportError as e:
     print(
-        f"Error importing Flask app/models: {e}. Ensure script is runnable and paths are correct."
+        f"Error importing Flask app or models: {e}. \n"
+        f"Ensure this script is in the 'backend/scripts' directory and the main app files are in 'backend/'.\n"
+        f"Current sys.path: {sys.path}"
     )
+    traceback.print_exc()
     sys.exit(1)
 
 # --- Configuration ---

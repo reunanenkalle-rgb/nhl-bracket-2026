@@ -7,50 +7,55 @@
         'pick-incorrect': series.is_pick_correct === false
       }"
     >
-      <div class="series-info">
-        <span class="round-info">R{{ series.round_number }}</span>
-        <span class="series-desc">{{ series.description }}</span>
-      </div>
-  
       <div class="teams-stacked-ro">
-        <div class="team-ro" :class="{ 'picked-winner-ro': isPicked(series.series_team1_abbr), 'actual-winner-ro': isActualWinner(series.series_team1_abbr) }">
+        <div class="team-ro" 
+             :class="{ 
+               'picked-winner-ro': isPicked(series.series_team1_abbr), 
+               'actual-winner-ro': isActualWinner(series.series_team1_abbr) && series.series_status === 'COMPLETED'
+             }">
           <img v-if="series.series_team1_logo" :src="series.series_team1_logo" :alt="series.series_team1_abbr || 'T1'" class="team-logo-ro"/>
           <span class="team-abbr-ro">{{ series.series_team1_abbr || 'TBD' }}</span>
-          <span v-if="series.series_status !== 'PENDING' && series.games_team1_won !== undefined" class="series-score-ro">{{ series.games_team1_won }}</span>
+          <span v-if="series.series_status !== 'PENDING' && series.games_team1_won !== undefined && series.games_team1_won !== null && series.series_team1_abbr" class="series-score-ro">{{ series.games_team1_won }}</span>
         </div>
   
         <div class="vs-separator-ro">vs</div>
   
-        <div class="team-ro" :class="{ 'picked-winner-ro': isPicked(series.series_team2_abbr), 'actual-winner-ro': isActualWinner(series.series_team2_abbr) }">
+        <div class="team-ro" 
+             :class="{ 
+               'picked-winner-ro': isPicked(series.series_team2_abbr), 
+               'actual-winner-ro': isActualWinner(series.series_team2_abbr) && series.series_status === 'COMPLETED'
+             }">
           <img v-if="series.series_team2_logo" :src="series.series_team2_logo" :alt="series.series_team2_abbr || 'T2'" class="team-logo-ro"/>
           <span class="team-abbr-ro">{{ series.series_team2_abbr || 'TBD' }}</span>
-          <span v-if="series.series_status !== 'PENDING' && series.games_team2_won !== undefined" class="series-score-ro">{{ series.games_team2_won }}</span>
+          <span v-if="series.series_status !== 'PENDING' && series.games_team2_won !== undefined && series.games_team2_won !== null && series.series_team2_abbr" class="series-score-ro">{{ series.games_team2_won }}</span>
         </div>
       </div>
       
       <div class="pick-status">
           <div v-if="series.predicted_winner_abbr" class="user-pick-display">
-              Your Pick: 
+              Picked: 
               <img v-if="series.predicted_winner_logo" :src="series.predicted_winner_logo" :alt="series.predicted_winner_abbr" class="team-logo-tiny"/>
               {{ series.predicted_winner_abbr }}
           </div>
           <div v-else class="user-pick-display">No pick made</div>
   
-          <div v-if="series.series_status === 'COMPLETED'">
-              <span v-if="series.is_pick_correct === true" class="correct">&#10004; Correct</span>
-              <span v-else-if="series.is_pick_correct === false" class="incorrect">&#10008; Incorrect</span>
+          <div v-if="series.series_status === 'COMPLETED'" class="pick-result-container">
+              <span v-if="series.is_pick_correct === true" class="correct pick-result">&#10004; Correct</span>
+              <span v-else-if="series.is_pick_correct === false" class="incorrect pick-result">&#10008; Incorrect</span>
+              <span v-else class="pick-result">Outcome Known / No Pick</span>
           </div>
       </div>
-  
     </div>
   </template>
   
   <script lang="ts" setup>
-  import type { ViewedPickDetail } from '@/types'; // This contains all the necessary fields
-  import { defineProps, computed } from 'vue';
+  import type { ViewedPickDetail } from '@/types';
+  import { defineProps } from 'vue';
   
   const props = defineProps<{
     series: ViewedPickDetail;
+    // Note: The isDisabled prop from interactive SeriesMatchup is not used here
+    // as this component is purely for display. Disablement is handled by context.
   }>();
   
   const isPicked = (teamAbbr: string | null) => {
@@ -64,102 +69,131 @@
   
   <style scoped>
   .ro-series-matchup {
-    border: 1px solid #ccc;
-    padding: 8px;
-    border-radius: 6px;
-    background-color: #f9f9f9;
-    width: 100%;
-    min-width: 200px;
-    max-width: 240px; /* Matchup box width */
+    border: 1px solid #dcdcdc; /* Slightly lighter border */
+    padding: 6px; /* Reduced padding further */
+    border-radius: 5px; /* Slightly smaller radius */
+    background-color: #fff;
+    width: fit-content; 
+    margin: 0 auto;     
+    min-width: 140px;   /* TRY REDUCING: e.g., 140px or 150px */
+    max-width: 160px;   /* TRY REDUCING: e.g., 160px or 170px */
     box-sizing: border-box;
-    margin-bottom: 5px; /* For vertical stacking in ViewBracketView */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Should keep content centered vertically */
   }
-  .series-info {
-    font-size: 0.75em;
-    color: #555;
-    margin-bottom: 6px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .round-info {
-    font-weight: bold;
-    margin-right: 5px;
-  }
+  
+  /* .series-info styles can be completely removed */
+  
   .teams-stacked-ro {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 2px;
+    align-items: center; 
+    width: 100%;
+    gap: 2px; /* Tighter gap */
   }
+  
   .team-ro {
     display: flex;
     align-items: center;
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #eee;
-    border-radius: 4px;
-    background-color: #fff;
-    font-size: 0.9em;
+    padding: 4px 6px; /* Reduced padding */
+    border: 1px solid #e8e8e8; /* Lighter border for team items */
+    border-radius: 3px;
+    width: 100%; 
+    box-sizing: border-box;
+    background-color: #fff; 
+    font-size: 0.8em; /* Smaller font for even more compactness */
+    margin-bottom: 3px; /* From your working PlayoffBracket.vue */
   }
+  .team-ro:last-child {
+    margin-bottom: 0;
+  }
+  
   .team-logo-ro {
-    width: 20px;
-    height: 20px;
-    margin-right: 6px;
+    width: 25px; /* Slightly smaller logo */
+    height: 25px;
+    margin-right: 5px;
     object-fit: contain;
+    flex-shrink: 0;
   }
   .team-abbr-ro {
-    flex-grow: 1;
+    flex-grow: 1; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500; /* Slightly less bold than picked/winner states */
   }
   .series-score-ro {
     font-weight: bold;
-    margin-left: 8px;
+    margin-left: 5px;
+    padding-left: 5px;
+    flex-shrink: 0;
+    font-size: 0.95em;
   }
   .vs-separator-ro {
-    font-size: 0.8em;
-    color: #777;
-    margin: 2px 0;
-  }
-  .picked-winner-ro {
-    outline: 2px solid #007bff; /* Blue outline for user's pick */
-    /* background-color: #e7f3ff; */
-  }
-  .actual-winner-ro {
-    /* This class applies to the actual winning team in the list */
-    /* We can use the pick-status div for more explicit Correct/Incorrect */
-    font-weight: bold; /* Make actual winner bold */
+    font-size: 0.75em;
+    color: #888; /* Lighter vs */
+    margin: 1px 0;
+    text-align: center;
+    font-weight: 500;
   }
   
+  .picked-winner-ro {
+     box-shadow: inset 0 0 0 2px #007bff; /* Blue inset highlight for pick */
+  }
+  
+  .actual-winner-ro { /* Style for the team div that was the actual winner */
+    /* If a team is both picked and actual winner, it will have both box-shadow and this font-weight */
+    font-weight: bold !important; /* Make actual winner text bold */
+  }
+  
+  /* Combined styles for visual feedback on pick correctness */
+  .ro-series-matchup.pick-correct .team-ro.picked-winner-ro {
+    background-color: #d1e7dd; /* Light green background if pick was correct */
+    border-color: #28a745;
+  }
+  .ro-series-matchup.pick-incorrect .team-ro.picked-winner-ro {
+     background-color: #f8d7da; /* Light red background if pick was incorrect */
+     border-color: #dc3545;
+     /* text-decoration: line-through; */ /* Optional: strike-through for incorrect pick's text */
+  }
+  .ro-series-matchup.pick-incorrect .team-ro.picked-winner-ro .team-abbr-ro {
+      text-decoration: line-through; /* Strike-through only the abbreviation */
+  }
+  
+  
   .pick-status {
-    margin-top: 8px;
-    font-size: 0.85em;
+    margin-top: 5px; /* Reduced margin */
+    font-size: 0.75em; /* Smaller status text */
     text-align: center;
   }
   .user-pick-display {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 4px;
-      margin-bottom: 4px;
+      gap: 3px;
+      margin-bottom: 2px; /* Reduced margin */
+      color: #444; /* Slightly darker */
   }
   .team-logo-tiny {
-      width: 16px;
-      height: 16px;
+      width: 12px; /* Smaller logo in status */
+      height: 12px;
       object-fit: contain;
   }
+  .pick-result-container { /* Container for Correct/Incorrect text */
+      margin-top: 2px;
+  }
+  .pick-result { 
+      font-weight: bold;
+  }
   .correct {
-    color: #28a745; /* Green */
-    font-weight: bold;
+    color: #155724; 
   }
   .incorrect {
-    color: #dc3545; /* Red */
-    font-weight: bold;
+    color: #842029; 
   }
-  .series-complete.pick-correct .user-pick-display {
-    /* Optional: if you want specific style when overall pick is correct */
-  }
-  .series-complete.pick-incorrect .user-pick-display {
-   /* Optional: if you want specific style when overall pick is incorrect */
+  .series-complete {
+    /* No specific style needed if individual elements handle appearance */
   }
   </style>

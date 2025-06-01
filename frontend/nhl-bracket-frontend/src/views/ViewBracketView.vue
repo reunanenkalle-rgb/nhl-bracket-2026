@@ -5,10 +5,14 @@
     
     <div v-if="bracketData" class="bracket-details-content">
       <div class="bracket-header">
-        <h2>{{ bracketData.player_name }}'s Bracket</h2>
+        <h2>{{ bracketData.player_name }}'s Bracket
+          <span v-if="bracketData.bracket_name">({{ bracketData.bracket_name }})</span>
+        </h2>
         <p class="bracket-subtitle">
-          Score: <span class="score">{{ bracketData.score }}</span>
-          <span v-if="bracketData.submission_timestamp"> | Submitted: {{ formatTimestamp(bracketData.submission_timestamp) }}</span>
+          Score: <span class="score-value">{{ bracketData.score }}</span> |
+          Correct Picks: <span class="score-value">{{ bracketData.correct_picks_count }} / {{ bracketData.total_completed_series_count }}</span> 
+          ({{ bracketData.percentage_correct }}%)
+          <br v-if="bracketData.submission_timestamp"> <span v-if="bracketData.submission_timestamp">Submitted: {{ formatTimestamp(bracketData.submission_timestamp) }}</span>
         </p>
       </div>
 
@@ -121,40 +125,45 @@ onMounted(() => {
 
 .bracket-container-ro {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-center; /* Or 'center' if you prefer less spread */
   align-items: flex-start;
   overflow-x: auto;
-  padding: 10px 0; /* Reduced vertical padding */
-  gap: 5px; /* Reduced gap between major sections */
+  padding: 1px 0; 
+  gap: 1px; /* HORIZONTAL gap between [West], [Final], [East] sections */
 }
 .conference-bracket-ro {
   display: flex;
-  gap: 5px; /* Reduced gap between round columns */
+  gap: 1px; /* HORIZONTAL gap between round columns */
 }
 .east-conference-ro { flex-direction: row-reverse; }
 
 .round-column-ro {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px; /* Vertical gap between ReadOnlySeriesMatchup */
-  padding: 0 2px; /* Minimal horizontal padding */
-  min-width: auto; /* Let content dictate more */
+  align-items: center; /* This will center the 'fit-content' ro-series-matchup boxes */
+  gap: 15px; /* VERTICAL gap between ReadOnlySeriesMatchup. Was 10px, maybe a bit more now */
+  padding: 0 2px;
+  min-width: auto; /* Let the content define width as much as possible */
+  /* You might set a min-width if needed, e.g., min-width: 200px; based on new ro-series-matchup width */
 }
 .round-title-ro {
   margin-bottom: 10px;
   text-align: center;
-  font-size: 1em; /* Slightly smaller */
+  font-size: 1em;
   color: #333;
   font-weight: 600;
   max-width: 160px; /* Ensure it fits */
   line-height: 1.2;
   word-wrap: break-word;
 }
-/* Vertical alignment for read-only bracket - copy and adjust from PlayoffBracket.vue's styles */
-.round-column-ro.round-2 { padding-top: 40px; /* Adjust based on ReadOnlySeriesMatchup height */ }
-.round-column-ro.round-3 { padding-top: 90px; /* Adjust */ }
-.final-column-ro.round-4 { padding-top: 90px; /* Adjust */ min-width: 220px;}
+
+/* Vertical alignment - these will need the most tweaking based on final ReadOnlySeriesMatchup height */
+.round-column-ro.round-2 { padding-top: 156px; /* Adjust these! */ }
+.round-column-ro.round-3 { padding-top: 250px; /* Adjust these! */ }
+.final-column-ro.round-4 { 
+  padding-top: 250px; /* Try to align with R3 */
+  min-width: 200px; /* Was 220px, can probably be narrower now */
+}
 
 .message { /* Copied from PlayoffBracket for consistency */
   padding: 12px 15px; margin: 15px auto; max-width: 80%;
@@ -177,4 +186,16 @@ onMounted(() => {
 .back-link:hover {
     background-color: #5a6268;
 }
+.bracket-header { text-align: center; margin-bottom: 25px; }
+.bracket-header h2 { margin-bottom: 5px; color: #333; }
+.bracket-subtitle { 
+    font-size: 1rem; /* Adjusted size */
+    color: #555; 
+    line-height: 1.5; /* For multi-line readability */
+}
+.score-value { 
+    font-weight: bold; 
+    color: #007bff; /* Or your theme color */
+}
+
 </style>
