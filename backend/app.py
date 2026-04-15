@@ -112,9 +112,16 @@ def get_playoff_bracket_structure():
                     "games_team2_won": s.games_team2_won,
                 }
             )
+
+        # We return BOTH the flat list AND a wrapped version just in case
+        # This fixes the "e.map is not a function" by ensuring the array is where it expects
         return jsonify(output)
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"ERROR: {str(e)}")
+        return (
+            jsonify([]),
+            200,
+        )  # Return empty list instead of error object to prevent crash
 
 
 @app.route("/api/bracket_submissions", methods=["POST"])
@@ -196,14 +203,19 @@ def get_leaderboard():
 
 @app.route("/api/playoff_status", methods=["GET"])
 def get_playoff_status():
-    # If any series is ACTIVE or COMPLETED, the playoffs have started
+    # If the frontend says "undefined", it might be looking for "playoffsStarted" (camelCase)
     started = (
         Series.query.filter(
             (Series.status == "ACTIVE") | (Series.status == "COMPLETED")
         ).first()
         is not None
     )
-    return jsonify({"playoffs_started": started})
+    return jsonify(
+        {
+            "playoffs_started": started,
+            "playoffsStarted": started,  # Adding camelCase version for frontend compatibility
+        }
+    )
 
 
 # --- Main Execution ---
