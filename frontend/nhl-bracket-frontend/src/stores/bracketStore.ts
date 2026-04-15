@@ -105,6 +105,7 @@ export const useBracketStore = defineStore('bracket', {
         this.allSeries = seriesFromAPI.map(s => ({
           ...s,
           predicted_winner_team_id: null,
+          predicted_series_length: null  // VITAL: Ensure this exists so Vue tracks it
         }));
         this.userPicks.clear();
         
@@ -199,26 +200,48 @@ export const useBracketStore = defineStore('bracket', {
       }
   },
 
-    makePick(seriesId: number, predictedWinnerTeamId: number | null) {
-      const series = this.allSeries.find(s => s.id === seriesId);
-      if (!series || series.status !== 'PENDING') return;
-
-      if (series.round_number > 1 && !this.canAdvanceToRound(series.round_number)) {
-          // Check if the specific series being picked actually has its teams populated
-          if (!series.team1_id || !series.team2_id) {
-            alert(`Teams for this series are not yet determined. Please complete selections for Round ${series.round_number - 1} first.`);
-            return;
-          }
+  makePick(seriesId: number, predictedWinnerTeamId: number | null, predictedSeriesLength: number | null = null) {
+    const series = this.allSeries.find(s => s.id === seriesId);
+    if (!series || series.status !== 'PENDING') return;
+  
+    // 1. Validation Logic
+    if (series.round_number > 1 && !this.canAdvanceToRound(series.round_number)) {
+      if (!series.team1_id || !series.team2_id) {
+        alert(`Teams for this series are not yet determined. Please complete selections for Round ${series.round_number - 1} first.`);
+        return;
       }
-
-      this.userPicks.set(seriesId, predictedWinnerTeamId);
+    }
+  
+    // 2. Handle Winner Selection (Called when clicking a team)
+    if (predictedWinnerTeamId !== null) {
+      // If the winner is changing, reset the predicted length
+      if (series.predicted_winner_team_id !== predictedWinnerTeamId) {
+        series.predicted_series_length = null;
+      }
+      
       series.predicted_winner_team_id = predictedWinnerTeamId;
       
-      // When a pick is changed, we need to recursively clear subsequent dependent picks
+      // Update your Map so other components using userPicks stay in sync
+      this.userPicks.set(seriesId, predictedWinnerTeamId);
+  
+      // Recursive logic to move teams forward in the bracket
       this.clearSubsequentPicks(series.series_identifier, series.round_number);
       this.updateAdvancingTeams();
-      this.checkIfBracketIsComplete();
-    },
+    }
+  
+    // 3. Handle Series Length Selection (Called when clicking 4, 5, 6, or 7)
+    if (predictedSeriesLength !== null) {
+      // Safety: Don't allow selecting a length if no winner is picked yet
+      if (series.predicted_winner_team_id === null) {
+        console.warn("Cannot set length without a winner");
+        return;
+      }
+      series.predicted_series_length = predictedSeriesLength;
+    }
+  
+    // 4. Final Refresh for the 'Submit' button
+    this.checkIfBracketIsComplete();
+  },
     
     clearSubsequentPicks(changedSeriesIdentifier: string, changedSeriesRound: number) {
         let seriesToClearQueue = [changedSeriesIdentifier];
@@ -315,14 +338,24 @@ export const useBracketStore = defineStore('bracket', {
     },
     
     checkIfBracketIsComplete() {
-        if (this.originalSeriesData.length === 0) {
-            this.isBracketCompletelyPicked = false;
-            return;
-        }
-        // A bracket is complete if all 15 series have a non-null pick
-        const numPicksMade = Array.from(this.userPicks.values()).filter(pick => pick !== null).length;
-        this.isBracketCompletelyPicked = numPicksMade === this.originalSeriesData.length;
-    },
+      // 1. If we haven't even loaded the series yet, it's definitely not complete
+      if (this.allSeries.length === 0) {
+          this.isBracketCompletelyPicked = false;
+          return;
+      }
+  
+      // 2. A bracket is complete ONLY if every series has:
+      //    - A predicted winner (from your clicks)
+      //    - A predicted series length (4, 5, 6, or 7)
+      const allPicksFilled = this.allSeries.every(series => {
+          const hasWinner = series.predicted_winner_team_id !== null;
+          const hasLength = series.predicted_series_length !== null;
+          return hasWinner && hasLength;
+      });
+  
+      // 3. Update the state
+      this.isBracketCompletelyPicked = allPicksFilled;
+  },
 
     setPlayerName(name: string) {
       this.playerName = name;
@@ -330,51 +363,58 @@ export const useBracketStore = defineStore('bracket', {
 
     async submitBracket() {
       this.checkIfBracketIsComplete(); // Ensure status is up-to-date
+      
       if (!this.isBracketCompletelyPicked) {
-        alert('Please complete all picks in the bracket.');
+        alert('Please complete all winners and series lengths (4-7 games) in the bracket.');
         return;
       }
       if (!this.playerName.trim()) {
         alert('Please enter your name.');
         return;
       }
-
-      // Use PickPayload for the items in the picks array
-      const picksToSubmit: PickPayload[] = [];
-      this.userPicks.forEach((winnerId, seriesId) => {
-        if (winnerId !== null) {
-          picksToSubmit.push({ series_id: seriesId, predicted_winner_team_id: winnerId });
-        }
-      });
-
-      // Use BracketSubmissionApiPayload for the overall payload
+    
+      // 1. Build the 2026 Payload using both Winner and Length
+      const picksToSubmit: PickPayload[] = this.allSeries.map(series => ({
+        series_id: series.id,
+        predicted_winner_team_id: series.predicted_winner_team_id as number,
+        predicted_series_length: series.predicted_series_length as number // New for 2026
+      }));
+    
       const payloadForApi: BracketSubmissionApiPayload = {
         player_name: this.playerName,
         picks: picksToSubmit,
       };
-
+    
       this.isLoading = true;
       this.error = null;
+    
       try {
-        const response = await apiService.submitBracket(payloadForApi); // This should now match
+        const response = await apiService.submitBracket(payloadForApi);
         console.log("Bracket submitted successfully:", response.data);
-        this.successMessage = `Bracket submitted successfully! Submission ID: ${response.data.submission_id}`; // Set success message
-        this.error = null; // Clear any previous errors
-        // TODO: Optionally, reset state, clear picks, or navigate to a confirmation page
+        
+        this.successMessage = `Bracket submitted successfully! Good luck in the 2026 Playoffs!`;
+        this.error = null;
+    
+        // 2. Reset State (Clean the ice for the next person)
         this.userPicks.clear();
-        this.allSeries.forEach(s => s.predicted_winner_team_id = null);
+        this.allSeries.forEach(s => {
+          s.predicted_winner_team_id = null;
+          s.predicted_series_length = null; // Reset length too!
+        });
+        
         this.updateAdvancingTeams(); // Reset visual bracket
         this.playerName = '';
         this.checkIfBracketIsComplete();
-    } catch (err: any) {
-        this.successMessage = null; // Clear success message
+    
+      } catch (err: any) {
+        this.successMessage = null;
         if (err.response && err.response.data && err.response.data.error) {
-            this.error = `Submission Error: ${err.response.data.error}`;
+          this.error = `Submission Error: ${err.response.data.error}`;
         } else {
-            this.error = 'Failed to submit bracket. An unknown error occurred.';
+          this.error = 'Failed to submit bracket. An unknown error occurred.';
         }
         console.error(err);
-    } finally {
+      } finally {
         this.isLoading = false;
       }
     },

@@ -48,12 +48,14 @@ export interface Series {
 
   // For UI state, managed by Pinia store; this is the user's pick for this series
   predicted_winner_team_id?: number | null;
+  predicted_series_length?: number | null; // This fixes the error!
 }
 
 // Type for an individual pick when constructing the submission payload
 export interface PickPayload { // This replaces the 'Pick' that was aliased to 'UserPick'
   series_id: number;
   predicted_winner_team_id: number;
+  predicted_series_length?: number | null; // This fixes the error!
 }
 
 // Type for the entire bracket submission payload sent to the API

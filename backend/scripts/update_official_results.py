@@ -28,7 +28,7 @@ except ImportError as e:
     sys.exit(1)
 
 # --- Configuration ---
-SEASON_TO_FETCH = "20242025"
+SEASON_TO_FETCH = "20252026"
 API_BASE_URL = "https://api-web.nhle.com"
 API_ENDPOINT = f"/v1/playoff-series/carousel/{SEASON_TO_FETCH}/"
 
@@ -268,6 +268,7 @@ def fetch_and_update_playoff_results():
                     ):  # Only if not already marked complete by API
                         if db_series.games_team1_won == 4:
                             db_series.status = "COMPLETED"
+                            db_series.actual_winner_team_id = db_series.team1_id
                             if db_series.team1_id:
                                 db_series.actual_winner_team_id = db_series.team1_id
                             else:  # Should ideally not happen if teams are set
@@ -276,12 +277,25 @@ def fetch_and_update_playoff_results():
                                 )
                         elif db_series.games_team2_won == 4:
                             db_series.status = "COMPLETED"
+                            db_series.actual_winner_team_id = db_series.team2_id
                             if db_series.team2_id:
                                 db_series.actual_winner_team_id = db_series.team2_id
                             else:  # Should ideally not happen
                                 print(
                                     f"  Warning: Series {db_series_identifier} team2_id is None, cannot set derived winner based on games_team2_won."
                                 )
+                    # --- NEW LOGIC FOR 2026 SERIES LENGTH ---
+                    if db_series.status == "COMPLETED":
+                        # In a best-of-7, length is simply the sum of all games played.
+                        # Since one team must have 4 wins to complete the series,
+                        # this will correctly result in 4, 5, 6, or 7.
+                        db_series.actual_series_length = (
+                            db_series.games_team1_won + db_series.games_team2_won
+                        )
+                    else:
+                        # Reset to None if the series is reset or still in progress
+                        db_series.actual_series_length = None
+                    # ----------------------------------------
 
                     # If still not completed, check if active
                     if db_series.status != "COMPLETED":

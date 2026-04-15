@@ -1,19 +1,23 @@
 <template>
-  <div id="app-container"> <header>
-      <h1>LoLa Viralline  NHL Playoff Bracket Challenge</h1>
-      <nav v-if="playoffsStarted"> {/* Conditionally render nav */}
+  <div id="app-container"> 
+    <header>
+      <h1>LoLa Viralline NHL Playoff Bracket Challenge</h1>
+      
+      <nav v-if="playoffsStarted">
         <RouterLink to="/">Bracket Entry</RouterLink>
         <RouterLink to="/leaderboard">Leaderboard</RouterLink>
-        {/* Add other links here as needed */}
       </nav>
+
       <nav v-else>
-        <RouterLink to="/">Make Your Picks!</RouterLink>
-        {/* You could have a message here like "Leaderboard available after playoffs start" */}
+        <RouterLink to="/">Make Your Picks!</RouterLink> 
+        <span class="nav-hint">(Leaderboard opens after first puck drop)</span>
       </nav>
     </header>
+
     <main>
       <RouterView />
     </main>
+
     <footer>
       <p>&copy; {{ new Date().getFullYear() }} NHL Bracket App</p>
     </footer>

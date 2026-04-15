@@ -7,6 +7,16 @@ from flask_cors import CORS
 # Removed: from datetime import datetime (now in models.py)
 import os
 import traceback
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# ... (after load_dotenv())
+ACCESS_CODE = os.getenv("APP_ACCESS_CODE", "DEFAULT_SECRET_123")
+
+print(f"--- DEBUG: Current Working Directory: {os.getcwd()} ---")
+print(f"--- DEBUG: Loaded Access Code: '{ACCESS_CODE}' ---")
+
 
 # Import db instance and ALL models from models.py
 from models import db, Player, Team, Series, BracketSubmission, Pick
@@ -158,9 +168,15 @@ def create_bracket_submission():
     for pick_data in picks_data:
         series_id = pick_data.get("series_id")
         predicted_winner_team_id = pick_data.get("predicted_winner_team_id")
-        if series_id is None or predicted_winner_team_id is None:
+        predicted_length = pick_data.get("predicted_series_length")  # New field
+        if not all([series_id, predicted_winner_team_id, predicted_length]):
             db.session.rollback()
-            return jsonify({"error": "Invalid pick data"}), 400
+            return (
+                jsonify(
+                    {"error": "Each pick must include a winner and a series length"}
+                ),
+                400,
+            )
         if not Series.query.get(series_id) or not Team.query.get(
             predicted_winner_team_id
         ):
@@ -170,6 +186,7 @@ def create_bracket_submission():
             submission_id=new_submission.id,
             series_id=series_id,
             predicted_winner_team_id=predicted_winner_team_id,
+            predicted_series_length=predicted_length,
         )
         db.session.add(new_pick)
     try:
@@ -249,6 +266,26 @@ def get_leaderboard():
 # For example, in get_submission_details:
 #   stats = calculate_submission_stats(submission_id)
 #   return jsonify({ ..., "score": stats["score"], "percentage_correct": stats["percentage_correct"], ...})
+
+
+# Set this in your environment or .env file later
+ACCESS_CODE = os.environ.get("APP_ACCESS_CODE", "MAMMOTH2026")
+
+
+@app.route("/api/verify_access", methods=["POST"])
+def verify_access():
+    data = request.json
+    user_code = data.get("code")
+
+    # DEBUG PRINT
+    print(f"--- Received code from browser: '{user_code}' ---")
+
+    if user_code == ACCESS_CODE:
+        # In a tiny app, just returning success is enough.
+        # The frontend will store a "unlocked" flag.
+        return jsonify({"success": True, "message": "Access Granted"}), 200
+
+    return jsonify({"success": False, "message": "Invalid Access Code"}), 401
 
 
 @app.route("/api/bracket_submissions/<int:submission_id>", methods=["GET"])

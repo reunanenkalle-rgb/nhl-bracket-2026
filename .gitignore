@@ -1,61 +1,28 @@
-# --- Python / Flask Specific ---
-# Python virtual environment
+# --- System / IDE ---
+.DS_Store
+Thumbs.db
+.vscode/
+.railway/
+*.swp
+
+# --- Python / Flask ---
 venv/
-backend/venv/ # If your backend venv is specifically inside the backend folder
-
-# Python cache files and compiled files
+backend/venv/
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
 *.pyd
-
-# Environment variables file (contains secrets and local config)
 .env
-backend/.env # If you have a .env file specifically in the backend folder
-
-# Flask instance folder (often contains sensitive config or db files)
+backend/.env
 instance/
+*.db
 
-# --- Node.js / Vue.js / Vite Specific ---
-# Node.js dependencies folder
+# --- Node / Vue / Vite ---
 node_modules/
-frontend/node_modules/ # If your frontend node_modules is specifically inside the frontend folder
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Build output directory (from 'npm run build' or 'vite build')
+frontend/node_modules/
 dist/
-frontend/dist/ # If your frontend build output is specifically inside the frontend folder
-
-# Vue/Vite specific cache or temp files
+frontend/dist/
 .vite/
 .temp/
-
-# Test coverage reports
-coverage/
-
-# --- Operating System / IDE Specific ---
-# macOS
-.DS_Store
-
-# VS Code editor specific (usually better to keep .vscode/settings.json if it's project specific,
-# but ignore .vscode/extensions.json or user-specific parts if not everyone uses VS Code or same extensions)
-# .vscode/ # Uncomment if you want to ignore all VSCode settings for this project.
-# If you DO want to share settings like recommended extensions, keep .vscode/extensions.json
-# and .vscode/settings.json (if they are project-generic and not user-specific).
-
-# Vim swap files
-*.swp
-*.swo
-
-# --- Other ---
-# If you have SQLite database files you don't want to commit (e.g., large dev dbs)
-*.db
-# *.sqlite
-# *.sqlite3
-# However, if it's an empty or schema-only db, you might commit it.
-# For this project, you might want to ignore the actual DB file once it has data:
-# backend/nhl_bracket.db # Or whatever your DB file is named
+npm-debug.log*
+yarn-error.log*
+.env.local

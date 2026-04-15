@@ -2,26 +2,31 @@
 
 import sys
 import os
-from app import app  # Still need 'app' from app.py for its config and app_context
-from models import db, Team, Series  # Import db and models from models.py
+import traceback  # For detailed error reporting
 
-# This makes sure the script can find the 'app' module in the parent 'backend' directory
-# Adjust if your script is in the same directory as app.py
+# --- Path Setup ---
+# Add parent directory (backend) to sys.path to allow importing 'app' and 'models'
 current_dir = os.path.dirname(os.path.abspath(__file__))
 parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 if parent_dir not in sys.path:
-    sys.path.append(parent_dir)
+    sys.path.insert(0, parent_dir)  # Insert at the beginning for priority
 
+# --- Application and Library Imports ---
 try:
     from nhlpy import NHLClient  # Your NHL API library
-
-    # Assuming your Flask app object is named 'app' and SQLAlchemy instance is 'db'
-    # and your Team model is defined in 'app.py' located in the parent directory.
-    from app import app, db, Team  # And any other models you might eventually need here
+    from app import app  # For app context and config
+    from models import db, Team  # For database models (only Team is directly used here)
 except ImportError as e:
-    print(f"Error importing necessary modules. Please check your setup and PYTHONPATH.")
+    print("--------------------------------------------------------------------")
+    print(f"ERROR: Could not import necessary modules (nhlpy, app, or models).")
     print(f"Details: {e}")
     print(f"Current sys.path: {sys.path}")
+    print("Please ensure 'nhlpy' is installed (pip install nhlpy) and that this script")
+    print(
+        "is in the 'backend/scripts' directory with 'app.py' and 'models.py' in 'backend/'."
+    )
+    print("--------------------------------------------------------------------")
+    traceback.print_exc()
     sys.exit(1)
 
 
