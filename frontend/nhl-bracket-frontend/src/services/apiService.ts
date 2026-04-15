@@ -16,12 +16,20 @@ export interface PlayoffStatusResponse {
     playoffs_started: boolean;
   }
 
+// 1. Debug log to see exactly what Vite "baked" into the code
+console.log('--- DEBUG: VITE_API_BASE_URL is:', import.meta.env.VITE_API_BASE_URL);
+
+// 2. Fallback logic: 
+// If the variable is missing, we want it to FAIL fast or use a known working URL
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://nhl-bracket-2026-production.up.railway.app/api';
+
 const apiClient = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
+    baseURL: BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },
 });
+
 
 export default {
     getPlayers(): Promise<AxiosResponse<Player[]>> {
