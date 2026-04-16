@@ -5,17 +5,17 @@
         "round_number": 1,
         "series": [
           { "series_identifier": "EC_R1_M1", "description": "A1 Buffalo vs WC1 Boston", "team1_abbr": "BUF", "team2_abbr": "BOS" },
-          { "series_identifier": "EC_R1_M2", "description": "A2 Montreal vs A3 Tampa Bay", "team1_abbr": "MTL", "team2_abbr": "TBL" },
+          { "series_identifier": "EC_R1_M2", "description": "A2 Tampa Bay vs A3 Montreal", "team1_abbr": "TBL", "team2_abbr": "MTL" },
           { "series_identifier": "EC_R1_M3", "description": "M1 Carolina vs WC2 Ottawa", "team1_abbr": "CAR", "team2_abbr": "OTT" },
           { "series_identifier": "EC_R1_M4", "description": "M2 Pittsburgh vs M3 Philadelphia", "team1_abbr": "PIT", "team2_abbr": "PHI" },
           { "series_identifier": "WC_R1_M1", "description": "C1 Colorado vs WC2 Los Angeles", "team1_abbr": "COL", "team2_abbr": "LAK" },
           { "series_identifier": "WC_R1_M2", "description": "C2 Dallas vs C3 Minnesota", "team1_abbr": "DAL", "team2_abbr": "MIN" },
-          { "series_identifier": "WC_R1_M3", "description": "P1 Edmonton vs WC1 Utah", "team1_abbr": "EDM", "team2_abbr": "UTA" },
-          { "series_identifier": "WC_R1_M4", "description": "P2 Vegas vs P3 Anaheim", "team1_abbr": "VGK", "team2_abbr": "ANA" }
+          { "series_identifier": "WC_R1_M3", "description": "P1 Vegas vs WC1 Utah", "team1_abbr": "VGK", "team2_abbr": "UTA" },
+          { "series_identifier": "WC_R1_M4", "description": "P2 Edmonton vs P3 Anaheim", "team1_abbr": "EDM", "team2_abbr": "ANA" }
         ]
       },
       { "round_number": 2, "series": [] },
       { "round_number": 3, "series": [] },
       { "round_number": 4, "series": [] }
     ]
-  }
+}
