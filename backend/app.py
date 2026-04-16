@@ -241,57 +241,101 @@ def admin_update_results():
 def get_submission_details(submission_id):
     try:
         from scoring import calculate_submission_stats
+        from models import Team
+
         submission = BracketSubmission.query.get_or_404(submission_id)
         picks = BracketPick.query.filter_by(submission_id=submission_id).all()
         stats = calculate_submission_stats(submission.id)
 
+        # 1. Create a quick lookup for picks by series identifier
+        # This lets us see who the user picked in earlier rounds
+        user_picks_by_ident = {
+            p.series.series_identifier: p.predicted_winner_team_id for p in picks
+        }
+
+        # 2. Define the "Parent" series for each matchup
+        # (e.g., Round 2 Match 1 comes from the winners of Round 1 Match 1 and Match 2)
+        parent_map = {
+            "EC_R2_M1": ("EC_R1_M1", "EC_R1_M2"),
+            "EC_R2_M2": ("EC_R1_M3", "EC_R1_M4"),
+            "WC_R2_M1": ("WC_R1_M1", "WC_R1_M2"),
+            "WC_R2_M2": ("WC_R1_M3", "WC_R1_M4"),
+            "EC_R3_CF": ("EC_R2_M1", "EC_R2_M2"),
+            "WC_R3_CF": ("WC_R2_M1", "WC_R2_M2"),
+            "SCF": ("EC_R3_CF", "WC_R3_CF"),
+        }
+
         picks_data = []
         for p in picks:
             s = p.series
-            
-            # Determine which team the user actually picked to show the logo/abbr
-            predicted_winner = None
-            if s.team1_id == p.predicted_winner_team_id:
-                predicted_winner = s.team1
-            elif s.team2_id == p.predicted_winner_team_id:
-                predicted_winner = s.team2
 
-            picks_data.append({
-                "series_identifier": s.series_identifier,
-                "round_number": s.round_number,
-                "series_status": s.status,
-                
-                # Team 1 Data
-                "series_team1_abbr": s.team1.abbreviation if s.team1 else "TBD",
-                "series_team1_logo": s.team1.logo_url if s.team1 else None,
-                "games_team1_won": s.games_team1_won,
-                
-                # Team 2 Data
-                "series_team2_abbr": s.team2.abbreviation if s.team2 else "TBD",
-                "series_team2_logo": s.team2.logo_url if s.team2 else None,
-                "games_team2_won": s.games_team2_won,
-                
-                # Prediction Data
-                "predicted_winner_abbr": predicted_winner.abbreviation if predicted_winner else None,
-                "predicted_winner_logo": predicted_winner.logo_url if predicted_winner else None,
-                "predicted_series_length": p.predicted_series_length,
-                
-                # Results Logic
-                "actual_winner_abbr": s.actual_winner.abbreviation if s.actual_winner else None,
-                "is_pick_correct": s.actual_winner_team_id == p.predicted_winner_team_id if s.status == 'COMPLETED' else None
-            })
+            # --- PROJECTED TEAMS LOGIC ---
+            # Default to actual teams from the DB
+            t1 = s.team1
+            t2 = s.team2
 
-        return jsonify({
-            "id": submission.id,
-            "player_name": submission.player.name if submission.player else "Unknown",
-            "bracket_name": submission.bracket_name,
-            "score": stats["score"],
-            "correct_picks_count": stats["correct_picks_for_completed"],
-            "total_completed_series_count": stats["total_completed_series_in_playoffs"],
-            "percentage_correct": stats["percentage_correct"],
-            "submission_timestamp": submission.submission_timestamp.isoformat(),
-            "picks": picks_data
-        })
+            # If actual teams are missing (future rounds), use the user's predicted winners from previous rounds
+            if s.series_identifier in parent_map:
+                p1_ident, p2_ident = parent_map[s.series_identifier]
+
+                if not t1 and p1_ident in user_picks_by_ident:
+                    t1 = Team.query.get(user_picks_by_ident[p1_ident])
+                if not t2 and p2_ident in user_picks_by_ident:
+                    t2 = Team.query.get(user_picks_by_ident[p2_ident])
+
+            # Determine the user's picked winner for THIS series to show the logo/abbr
+            predicted_winner = Team.query.get(p.predicted_winner_team_id)
+
+            picks_data.append(
+                {
+                    "series_identifier": s.series_identifier,
+                    "round_number": s.round_number,
+                    "series_status": s.status,
+                    # Team 1 (Actual or Projected)
+                    "series_team1_abbr": t1.abbreviation if t1 else "TBD",
+                    "series_team1_logo": t1.logo_url if t1 else None,
+                    "games_team1_won": s.games_team1_won,
+                    # Team 2 (Actual or Projected)
+                    "series_team2_abbr": t2.abbreviation if t2 else "TBD",
+                    "series_team2_logo": t2.logo_url if t2 else None,
+                    "games_team2_won": s.games_team2_won,
+                    # The User's Pick for this series
+                    "predicted_winner_abbr": (
+                        predicted_winner.abbreviation if predicted_winner else None
+                    ),
+                    "predicted_winner_logo": (
+                        predicted_winner.logo_url if predicted_winner else None
+                    ),
+                    "predicted_series_length": p.predicted_series_length,
+                    # Accuracy tracking
+                    "actual_winner_abbr": (
+                        s.actual_winner.abbreviation if s.actual_winner else None
+                    ),
+                    "is_pick_correct": (
+                        s.actual_winner_team_id == p.predicted_winner_team_id
+                        if s.status == "COMPLETED"
+                        else None
+                    ),
+                }
+            )
+
+        return jsonify(
+            {
+                "id": submission.id,
+                "player_name": (
+                    submission.player.name if submission.player else "Unknown"
+                ),
+                "bracket_name": submission.bracket_name,
+                "score": stats["score"],
+                "correct_picks_count": stats["correct_picks_for_completed"],
+                "total_completed_series_count": stats[
+                    "total_completed_series_in_playoffs"
+                ],
+                "percentage_correct": stats["percentage_correct"],
+                "submission_timestamp": submission.submission_timestamp.isoformat(),
+                "picks": picks_data,
+            }
+        )
     except Exception as e:
         print(f"ERROR: {str(e)}")
         return jsonify({"error": str(e)}), 500
