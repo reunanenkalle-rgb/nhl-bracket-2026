@@ -240,53 +240,58 @@ def admin_update_results():
 @app.route("/api/bracket_submissions/<int:submission_id>", methods=["GET"])
 def get_submission_details(submission_id):
     try:
+        from scoring import calculate_submission_stats
         submission = BracketSubmission.query.get_or_404(submission_id)
         picks = BracketPick.query.filter_by(submission_id=submission_id).all()
-
-        # Calculate stats for the header
         stats = calculate_submission_stats(submission.id)
 
         picks_data = []
         for p in picks:
-            s = p.series  # This now works because of the models.py fix!
-            picks_data.append(
-                {
-                    "series_id": p.series_id,
-                    "series_identifier": s.series_identifier,
-                    "round_number": s.round_number,
-                    "predicted_winner_team_id": p.predicted_winner_team_id,
-                    "predicted_series_length": p.predicted_series_length,
-                    "team1": {
-                        "name": s.team1.name if s.team1 else "TBD",
-                        "abbreviation": s.team1.abbreviation if s.team1 else "TBD",
-                        "logo_url": s.team1.logo_url if s.team1 else None,
-                    },
-                    "team2": {
-                        "name": s.team2.name if s.team2 else "TBD",
-                        "abbreviation": s.team2.abbreviation if s.team2 else "TBD",
-                        "logo_url": s.team2.logo_url if s.team2 else None,
-                    },
-                    "actual_winner_team_id": s.actual_winner_team_id,
-                    "status": s.status,
-                }
-            )
+            s = p.series
+            
+            # Determine which team the user actually picked to show the logo/abbr
+            predicted_winner = None
+            if s.team1_id == p.predicted_winner_team_id:
+                predicted_winner = s.team1
+            elif s.team2_id == p.predicted_winner_team_id:
+                predicted_winner = s.team2
 
-        return jsonify(
-            {
-                "id": submission.id,
-                "player_name": (
-                    submission.player.name if submission.player else "Unknown"
-                ),
-                "score": stats["score"],
-                "correct_picks_count": stats["correct_picks_for_completed"],
-                "total_completed_series_count": stats[
-                    "total_completed_series_in_playoffs"
-                ],
-                "percentage_correct": stats["percentage_correct"],
-                "submission_timestamp": submission.submission_timestamp.isoformat(),
-                "picks": picks_data,
-            }
-        )
+            picks_data.append({
+                "series_identifier": s.series_identifier,
+                "round_number": s.round_number,
+                "series_status": s.status,
+                
+                # Team 1 Data
+                "series_team1_abbr": s.team1.abbreviation if s.team1 else "TBD",
+                "series_team1_logo": s.team1.logo_url if s.team1 else None,
+                "games_team1_won": s.games_team1_won,
+                
+                # Team 2 Data
+                "series_team2_abbr": s.team2.abbreviation if s.team2 else "TBD",
+                "series_team2_logo": s.team2.logo_url if s.team2 else None,
+                "games_team2_won": s.games_team2_won,
+                
+                # Prediction Data
+                "predicted_winner_abbr": predicted_winner.abbreviation if predicted_winner else None,
+                "predicted_winner_logo": predicted_winner.logo_url if predicted_winner else None,
+                "predicted_series_length": p.predicted_series_length,
+                
+                # Results Logic
+                "actual_winner_abbr": s.actual_winner.abbreviation if s.actual_winner else None,
+                "is_pick_correct": s.actual_winner_team_id == p.predicted_winner_team_id if s.status == 'COMPLETED' else None
+            })
+
+        return jsonify({
+            "id": submission.id,
+            "player_name": submission.player.name if submission.player else "Unknown",
+            "bracket_name": submission.bracket_name,
+            "score": stats["score"],
+            "correct_picks_count": stats["correct_picks_for_completed"],
+            "total_completed_series_count": stats["total_completed_series_in_playoffs"],
+            "percentage_correct": stats["percentage_correct"],
+            "submission_timestamp": submission.submission_timestamp.isoformat(),
+            "picks": picks_data
+        })
     except Exception as e:
         print(f"ERROR: {str(e)}")
         return jsonify({"error": str(e)}), 500
