@@ -161,7 +161,9 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-x: hidden; /* Prevents body-level scrolling */
+  /* REMOVED: overflow-x: hidden (We want scrolling now!) */
+  overflow-x: auto; 
+  width: 100%;
 }
 
 /* 1. HEADER (NHL Blue Bar) */
@@ -202,21 +204,30 @@ onMounted(() => {
 .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
 
 /* 3. BRACKET SCALING & FIT */
+/* 2. UPDATE: The wrapper should allow the bracket to be its natural size */
 .bracket-wrapper {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  /* Slightly more aggressive scaling for horizontal fit */
-  transform: scale(0.88); 
-  transform-origin: top center;
-  margin-bottom: -80px; 
+  display: block; /* Changed from flex to block */
+  overflow-x: auto; /* Enable horizontal scroll */
+  -webkit-overflow-scrolling: touch; /* Smooth scroll for iOS */
+  padding: 20px 0;
+  
+  /* MOBILE SCALE FIX: Remove the hard scale for mobile, or keep it only for desktop */
+  transform: none; 
+  margin-bottom: 0;
 }
 
+/* 3. UPDATE: Ensure the display doesn't shrink below a usable width */
 .bracket-display {
   display: flex;
   flex-direction: row;
-  align-items: stretch;
-  gap: 6px; /* Reduced gap from 10px */
+  align-items: flex-start;
+  gap: 8px;
+  padding: 0 20px;
+  
+  /* This is the key: set a min-width so 7 columns have room to breathe */
+  min-width: 1200px; 
+  margin: 0 auto;
 }
 
 .round-column {
@@ -287,6 +298,38 @@ onMounted(() => {
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
 }
+
+/* 4. ADD: Media Query for Desktop scaling */
+@media (min-width: 1201px) {
+  .bracket-wrapper {
+    display: flex;
+    justify-content: center;
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
+
+/* 5. ADD: Mobile specific tweaks */
+@media (max-width: 1200px) {
+  .bracket-header h1 {
+    font-size: 1.4rem;
+  }
+  .controls input {
+    width: 220px;
+  }
+
+  /* Hint to user that they can scroll */
+  .bracket-wrapper::after {
+    content: "↔ Swipe to view full bracket";
+    display: block;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 15px;
+  }
+}
+
+
 .submit-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
 .status-box { height: 20px; margin-top: 10px; }
 .status-msg { color: #888; font-size: 0.8rem; }
