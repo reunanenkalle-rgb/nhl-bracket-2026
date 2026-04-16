@@ -42,9 +42,9 @@ class Series(db.Model):
     team2 = db.relationship("Team", foreign_keys=[team2_id])
     actual_winner = db.relationship("Team", foreign_keys=[actual_winner_team_id])
 
-    # FIX: Changed "Pick" to "BracketPick"
+    # FIXED: Points to BracketPick, and uses back_populates="series"
     picks_for_series = db.relationship(
-        "BracketPick", back_populates="series_rel", lazy="dynamic"
+        "BracketPick", back_populates="series", lazy="dynamic"
     )
 
 
@@ -57,7 +57,7 @@ class BracketSubmission(db.Model):
     )
     bracket_name = db.Column(db.String(100), nullable=True)
 
-    # FIX: Changed "Pick" to "BracketPick"
+    # FIXED: Points to BracketPick
     picks = db.relationship(
         "BracketPick",
         backref="submission",
@@ -67,7 +67,7 @@ class BracketSubmission(db.Model):
 
 
 class BracketPick(db.Model):
-    __tablename__ = "bracket_pick"  # Added for clarity
+    __tablename__ = "bracket_pick"
     id = db.Column(db.Integer, primary_key=True)
     submission_id = db.Column(
         db.Integer, db.ForeignKey("bracket_submission.id"), nullable=False
@@ -78,5 +78,6 @@ class BracketPick(db.Model):
     )
     predicted_series_length = db.Column(db.Integer, nullable=False)
 
-    series_rel = db.relationship("Series", back_populates="picks_for_series")
+    # FIXED: Relationship name is now 'series' to match app.py logic
+    series = db.relationship("Series", back_populates="picks_for_series")
     predicted_winner = db.relationship("Team", foreign_keys=[predicted_winner_team_id])
