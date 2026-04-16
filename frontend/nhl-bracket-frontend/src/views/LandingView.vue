@@ -8,7 +8,10 @@
         <div class="input-group">
           <input 
             v-model="accessCode" 
-            type="password" 
+            type="text" 
+            autocapitalize="none" 
+            autocorrect="off"
+            spellcheck="false" 
             placeholder="Access Code" 
             @keyup.enter="checkCode"
           />
@@ -25,7 +28,7 @@
   <script setup lang="ts">
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import axios from 'axios';
+  import apiService from '@/services/apiService'; // Use the service we already fixed!
   
   const accessCode = ref('');
   const error = ref('');
@@ -34,22 +37,29 @@
   
   const checkCode = async () => {
     if (!accessCode.value) return;
+    
+    // MOBILE FIX: Remove accidental spaces and force to uppercase
+    const sanitizedCode = accessCode.value.trim().toUpperCase();
+    
     isLoading.value = true;
     error.value = '';
   
     try {
-      // Replace with your actual API URL if different
-      const response = await axios.post('http://localhost:5000/api/verify_access', { 
-        code: accessCode.value
-      });
+      // Use the apiService instead of a hardcoded localhost URL
+      const response = await apiService.verifyAccess(sanitizedCode);
   
       if (response.data.success) {
-        // Store the access flag in localStorage
         localStorage.setItem('lola_access_granted', 'true');
         router.push('/'); // Redirect to the bracket
       }
-    } catch (err) {
-      error.value = 'Väärä koodi. Try again!';
+    } catch (err: any) {
+      // Fix the encoding for "Väärä koodi"
+      if (err.response && err.response.status === 401) {
+        error.value = 'Väärä koodi. Try again!';
+      } else {
+        error.value = 'Server error. Is the backend running?';
+      }
+      console.error('Login error:', err);
     } finally {
       isLoading.value = false;
     }

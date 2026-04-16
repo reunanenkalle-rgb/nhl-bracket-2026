@@ -5,22 +5,21 @@ import type {
     Player,
     Team,
     Series,
-    BracketSubmissionApiPayload, // Use the new payload type
-    BracketSubmissionApiResponse, // Use the new response type
+    BracketSubmissionApiPayload,
+    BracketSubmissionApiResponse,
     LeaderboardEntry,
     DetailedBracketView
-} from '@/types'; // Ensure this path is correct
+} from '@/types';
 
 // Define type for playoff status response
 export interface PlayoffStatusResponse {
     playoffs_started: boolean;
-  }
+}
 
 // 1. Debug log to see exactly what Vite "baked" into the code
 console.log('--- DEBUG: VITE_API_BASE_URL is:', import.meta.env.VITE_API_BASE_URL);
 
-// 2. Fallback logic: 
-// If the variable is missing, we want it to FAIL fast or use a known working URL
+// 2. Fallback logic: Ensure it always has https:// and points to your production backend
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://nhl-bracket-2026-production.up.railway.app/api';
 
 const apiClient = axios.create({
@@ -30,8 +29,12 @@ const apiClient = axios.create({
     },
 });
 
-
 export default {
+    // NEW: The Access Code verification method
+    verifyAccess(code: string): Promise<AxiosResponse<{ success: boolean; message: string }>> {
+        return apiClient.post('/verify_access', { code });
+    },
+
     getPlayers(): Promise<AxiosResponse<Player[]>> {
         return apiClient.get('/players');
     },
@@ -41,7 +44,6 @@ export default {
     },
 
     getTeams(): Promise<AxiosResponse<Team[]>> {
-        // Ensure your backend /api/teams returns data matching the Team interface
         return apiClient.get('/teams');
     },
 
@@ -49,14 +51,7 @@ export default {
         return apiClient.get('/playoff_bracket_structure');
     },
 
-    /**
-     * Submits the completed bracket to the backend.
-     * @param submissionPayload - The data for the bracket submission.
-     * Should conform to BracketSubmissionApiPayload interface.
-     */
     submitBracket(submissionPayload: BracketSubmissionApiPayload): Promise<AxiosResponse<BracketSubmissionApiResponse>> {
-        // The submissionPayload already contains player_name and picks array
-        // as expected by the backend endpoint designed earlier.
         return apiClient.post('/bracket_submissions', submissionPayload);
     },
 
@@ -66,23 +61,13 @@ export default {
 
     getLeaderboard(): Promise<AxiosResponse<LeaderboardEntry[]>> {
         return apiClient.get('/leaderboard');
-        },
+    },
 
     getPlayoffStatus(): Promise<AxiosResponse<PlayoffStatusResponse>> {
         return apiClient.get('/playoff_status');
-        },
+    },
 
     getSubmissionDetails(submissionId: number | string): Promise<AxiosResponse<DetailedBracketView>> {
         return apiClient.get(`/bracket_submissions/${submissionId}`);
-        }
-
-
-
-    // You can add more functions here as your app grows, for example:
-    // getSubmittedBracket(submissionId: number): Promise<AxiosResponse<FullBracketDetails>> {
-    //   return apiClient.get(`/bracket_submissions/${submissionId}`);
-    // },
-    // getLeaderboard(): Promise<AxiosResponse<LeaderboardEntry[]>> {
-    //   return apiClient.get('/leaderboard');
-    // }
+    }
 };
