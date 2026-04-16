@@ -1,5 +1,5 @@
 from flask import current_app
-from models import db, BracketSubmission, Pick, Series, Team
+from models import db, BracketSubmission, BracketPick, Series, Team
 
 # Tier 1: Base points for picking the correct winner
 POINTS_WINNER = {
@@ -89,7 +89,7 @@ def get_stanley_cup_pick_details_for_submission(submission_id: int) -> dict | No
     if not scf_series:
         return None
 
-    scf_pick = Pick.query.filter_by(
+    scf_pick = BracketPick.query.filter_by(
         submission_id=submission.id, series_id=scf_series.id
     ).first()
 

@@ -151,7 +151,7 @@ def create_bracket_submission():
     db.session.flush()
 
     for pick_data in picks_data:
-        new_pick = Pick(
+        new_pick = BracketPick(
             submission_id=new_submission.id,
             series_id=pick_data.get("series_id"),
             predicted_winner_team_id=pick_data.get("predicted_winner_team_id"),
@@ -276,8 +276,10 @@ def get_submission_details(submission_id):
         return jsonify(
             {
                 "id": submission.id,
-                "player_name": submission.player_name,
-                "score": submission.total_score,  # Frontend expects 'score', not 'total_score'
+                "player_name": (
+                    submission.player.name if submission.player else "Unknown"
+                ),
+                "score": calculate_submission_stats(submission.id)["score"],
                 "correct_picks_count": 0,  # You can add logic to calculate this later
                 "percentage_correct": 0,
                 "picks": picks_data,
