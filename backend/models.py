@@ -91,7 +91,7 @@ class BracketSubmission(db.Model):
         return f"<BracketSubmission {self.id} by Player ID {self.player_id}>"
 
 
-class Pick(db.Model):
+class BracketPick(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     submission_id = db.Column(
         db.Integer, db.ForeignKey("bracket_submission.id"), nullable=False

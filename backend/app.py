@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import subprocess
 
 # Import db instance and ALL models from models.py
-from models import db, Player, Team, Series, BracketSubmission, Pick, BracketPick
+from models import db, Player, Team, Series, BracketSubmission, BracketPick
 
 # Import the scoring functions
 from scoring import (
