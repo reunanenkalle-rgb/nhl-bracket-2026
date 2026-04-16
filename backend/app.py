@@ -240,15 +240,15 @@ def admin_update_results():
 @app.route("/api/bracket_submissions/<int:submission_id>", methods=["GET"])
 def get_submission_details(submission_id):
     try:
-        # 1. Fetch the main submission
         submission = BracketSubmission.query.get_or_404(submission_id)
-
-        # 2. Fetch all picks
         picks = BracketPick.query.filter_by(submission_id=submission_id).all()
+
+        # Calculate stats for the header
+        stats = calculate_submission_stats(submission.id)
 
         picks_data = []
         for p in picks:
-            s = p.series  # Get the associated series for this pick
+            s = p.series  # This now works because of the models.py fix!
             picks_data.append(
                 {
                     "series_id": p.series_id,
@@ -256,7 +256,6 @@ def get_submission_details(submission_id):
                     "round_number": s.round_number,
                     "predicted_winner_team_id": p.predicted_winner_team_id,
                     "predicted_series_length": p.predicted_series_length,
-                    # Include team info so the read-only view knows who played
                     "team1": {
                         "name": s.team1.name if s.team1 else "TBD",
                         "abbreviation": s.team1.abbreviation if s.team1 else "TBD",
@@ -267,7 +266,6 @@ def get_submission_details(submission_id):
                         "abbreviation": s.team2.abbreviation if s.team2 else "TBD",
                         "logo_url": s.team2.logo_url if s.team2 else None,
                     },
-                    # Official results for highlighting correct/incorrect picks
                     "actual_winner_team_id": s.actual_winner_team_id,
                     "status": s.status,
                 }
@@ -279,9 +277,13 @@ def get_submission_details(submission_id):
                 "player_name": (
                     submission.player.name if submission.player else "Unknown"
                 ),
-                "score": calculate_submission_stats(submission.id)["score"],
-                "correct_picks_count": 0,  # You can add logic to calculate this later
-                "percentage_correct": 0,
+                "score": stats["score"],
+                "correct_picks_count": stats["correct_picks_for_completed"],
+                "total_completed_series_count": stats[
+                    "total_completed_series_in_playoffs"
+                ],
+                "percentage_correct": stats["percentage_correct"],
+                "submission_timestamp": submission.submission_timestamp.isoformat(),
                 "picks": picks_data,
             }
         )
