@@ -290,9 +290,11 @@ def get_submission_details(submission_id):
         return jsonify({"error": str(e)}), 500
 
 
+with app.app_context():
+    db.create_all()
+
+
 # --- Main Execution ---
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     # Railway uses Gunicorn in production, but for local dev:
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)))
