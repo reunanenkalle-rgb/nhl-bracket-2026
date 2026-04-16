@@ -221,20 +221,20 @@ onMounted(() => {
 .bracket-display {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: stretch; /* This makes all columns the same height */
   gap: 8px;
-  padding: 0 20px;
-  
-  /* This is the key: set a min-width so 7 columns have room to breathe */
-  min-width: 1200px; 
+  padding: 40px 20px; /* Added some vertical padding for breathing room */
+  min-width: 1250px; /* Keep this to ensure horizontal scroll */
   margin: 0 auto;
 }
 
 .round-column {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  width: 155px; /* Reduced width from 170px to save horizontal space */
+  /* This is the secret sauce: space-around centers 1 box between 2, and 2 between 4 */
+  justify-content: space-around; 
+  width: 165px;
+  flex-shrink: 0; /* Prevents columns from squishing on mobile */
 }
 
 .column-label {
@@ -246,11 +246,19 @@ onMounted(() => {
 }
 
 .matchup-slot {
-  flex: 1;
+  flex: 1; /* This fills the column height evenly */
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 110px;
+  min-height: 140px; /* Slightly taller to accommodate the game length buttons */
+  width: 100%;
+}
+
+.round-final {
+  /* Give the Cup Final column a bit of extra prominence if you want */
+  border-left: 1px dashed #ccc;
+  border-right: 1px dashed #ccc;
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* 4. LENGTH SELECTOR (Compact) */
