@@ -69,5 +69,9 @@ export default {
 
     getSubmissionDetails(submissionId: number | string): Promise<AxiosResponse<DetailedBracketView>> {
         return apiClient.get(`/bracket_submissions/${submissionId}`);
-    }
+    },
+
+    async adminUpdateResults(): Promise<AxiosResponse<{ success: boolean; output: string; error?: string }>> {
+        return apiClient.post('/admin/update-official-results');
+    },
 };

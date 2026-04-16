@@ -5,9 +5,10 @@ from flask_cors import CORS
 import os
 import traceback
 from dotenv import load_dotenv
+import subprocess
 
 # Import db instance and ALL models from models.py
-from models import db, Player, Team, Series, BracketSubmission, Pick
+from models import db, Player, Team, Series, BracketSubmission, Pick, BracketPick
 
 # Import the scoring functions
 from scoring import (
@@ -216,6 +217,75 @@ def get_playoff_status():
             "playoffsStarted": started,  # Adding camelCase version for frontend compatibility
         }
     )
+
+
+@app.route("/api/admin/update-official-results", methods=["POST"])
+def admin_update_results():
+    # In a real app, you'd check a password here
+    try:
+        # Runs the script we just tested
+        script_path = os.path.join(
+            os.path.dirname(__file__), "scripts", "update_official_results.py"
+        )
+        result = subprocess.run(
+            ["python3", script_path], capture_output=True, text=True
+        )
+        return jsonify(
+            {"success": True, "output": result.stdout, "error": result.stderr}
+        )
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+@app.route("/api/bracket_submissions/<int:submission_id>", methods=["GET"])
+def get_submission_details(submission_id):
+    try:
+        # 1. Fetch the main submission
+        submission = BracketSubmission.query.get_or_404(submission_id)
+
+        # 2. Fetch all picks
+        picks = BracketPick.query.filter_by(submission_id=submission_id).all()
+
+        picks_data = []
+        for p in picks:
+            s = p.series  # Get the associated series for this pick
+            picks_data.append(
+                {
+                    "series_id": p.series_id,
+                    "series_identifier": s.series_identifier,
+                    "round_number": s.round_number,
+                    "predicted_winner_team_id": p.predicted_winner_team_id,
+                    "predicted_series_length": p.predicted_series_length,
+                    # Include team info so the read-only view knows who played
+                    "team1": {
+                        "name": s.team1.name if s.team1 else "TBD",
+                        "abbreviation": s.team1.abbreviation if s.team1 else "TBD",
+                        "logo_url": s.team1.logo_url if s.team1 else None,
+                    },
+                    "team2": {
+                        "name": s.team2.name if s.team2 else "TBD",
+                        "abbreviation": s.team2.abbreviation if s.team2 else "TBD",
+                        "logo_url": s.team2.logo_url if s.team2 else None,
+                    },
+                    # Official results for highlighting correct/incorrect picks
+                    "actual_winner_team_id": s.actual_winner_team_id,
+                    "status": s.status,
+                }
+            )
+
+        return jsonify(
+            {
+                "id": submission.id,
+                "player_name": submission.player_name,
+                "score": submission.total_score,  # Frontend expects 'score', not 'total_score'
+                "correct_picks_count": 0,  # You can add logic to calculate this later
+                "percentage_correct": 0,
+                "picks": picks_data,
+            }
+        )
+    except Exception as e:
+        print(f"ERROR: {str(e)}")
+        return jsonify({"error": str(e)}), 500
 
 
 # --- Main Execution ---

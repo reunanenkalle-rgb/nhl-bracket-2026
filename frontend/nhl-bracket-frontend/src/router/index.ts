@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import LandingView from '../views/LandingView.vue';
 import PlayoffBracket from '../components/PlayoffBracket.vue'; // Or wherever your main bracket view is
 import LeaderboardView from '../views/LeaderboardView.vue'; // Assuming you created this
+import AdminView from '../views/AdminView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,6 +12,13 @@ const router = createRouter({
       path: '/welcome',
       name: 'Landing',
       component: LandingView
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: AdminView,
+      // Optional: Add a meta check if you want to protect it
+      meta: { requiresAccess: true } 
     },
     {
       path: '/',
