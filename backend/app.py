@@ -221,18 +221,19 @@ def get_playoff_status():
 
 @app.route("/api/admin/update-official-results", methods=["POST"])
 def admin_update_results():
-    # In a real app, you'd check a password here
+    # Basic Security Check
+    auth_token = request.headers.get("X-Admin-Token")
+    if auth_token != os.environ.get("ADMIN_SYNC_TOKEN"):
+        return jsonify({"success": False, "error": "Unauthorized"}), 401
+
     try:
-        # Runs the script we just tested
         script_path = os.path.join(
             os.path.dirname(__file__), "scripts", "update_official_results.py"
         )
         result = subprocess.run(
             ["python3", script_path], capture_output=True, text=True
         )
-        return jsonify(
-            {"success": True, "output": result.stdout, "error": result.stderr}
-        )
+        return jsonify({"success": True, "output": result.stdout})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
