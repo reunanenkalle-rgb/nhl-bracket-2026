@@ -3,14 +3,9 @@
     <header>
       <h1>LoLa Viralline NHL Playoff Bracket Challenge</h1>
       
-      <nav v-if="playoffsStarted">
+      <nav>
         <RouterLink to="/">Bracket Entry</RouterLink>
         <RouterLink to="/leaderboard">Leaderboard</RouterLink>
-      </nav>
-
-      <nav v-else>
-        <RouterLink to="/">Make Your Picks!</RouterLink> 
-        <span class="nav-hint">(Leaderboard opens after first puck drop)</span>
       </nav>
     </header>
 
