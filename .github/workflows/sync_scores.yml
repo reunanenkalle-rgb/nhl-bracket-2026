@@ -10,5 +10,5 @@ jobs:
     steps:
       - name: Trigger Admin Sync
         run: |
-          curl -X POST https://your-railway-url.app/api/admin/update-official-results \
+          curl -X POST https://lively-achievement-production-ec4a.up.railway.app/api/admin/update-official-results
           -H "X-Admin-Token: ${{ secrets.ADMIN_SYNC_TOKEN }}"
