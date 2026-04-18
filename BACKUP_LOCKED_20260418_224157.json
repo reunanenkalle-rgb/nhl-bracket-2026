@@ -1,0 +1,494 @@
+[
+    {
+        "player_name": "Tino",
+        "bracket_name": "Tino's Bracket",
+        "submitted_at": "2026-04-17T05:22:05.015385",
+        "picks": [
+            {
+                "series_identifier": "EC_R1_M1",
+                "predicted_winner": "BUF",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M2",
+                "predicted_winner": "TBL",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "EC_R1_M3",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M4",
+                "predicted_winner": "PHI",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R1_M2",
+                "predicted_winner": "MIN",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "WC_R1_M3",
+                "predicted_winner": "VGK",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R1_M4",
+                "predicted_winner": "EDM",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R2_M1",
+                "predicted_winner": "TBL",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "EC_R2_M2",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R2_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R2_M2",
+                "predicted_winner": "VGK",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "EC_R3_CF",
+                "predicted_winner": "TBL",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "WC_R3_CF",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "SCF",
+                "predicted_winner": "TBL",
+                "predicted_length": 6
+            }
+        ]
+    },
+    {
+        "player_name": "Kreu",
+        "bracket_name": "Kreu's Bracket",
+        "submitted_at": "2026-04-17T18:40:54.063657",
+        "picks": [
+            {
+                "series_identifier": "EC_R1_M1",
+                "predicted_winner": "BUF",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M2",
+                "predicted_winner": "TBL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R1_M3",
+                "predicted_winner": "CAR",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R1_M4",
+                "predicted_winner": "PIT",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R1_M2",
+                "predicted_winner": "DAL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M3",
+                "predicted_winner": "VGK",
+                "predicted_length": 4
+            },
+            {
+                "series_identifier": "WC_R1_M4",
+                "predicted_winner": "EDM",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R2_M1",
+                "predicted_winner": "TBL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R2_M2",
+                "predicted_winner": "CAR",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R2_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R2_M2",
+                "predicted_winner": "VGK",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R3_CF",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R3_CF",
+                "predicted_winner": "COL",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "SCF",
+                "predicted_winner": "CAR",
+                "predicted_length": 7
+            }
+        ]
+    },
+    {
+        "player_name": "Ville Koistinen 2008",
+        "bracket_name": "Ville Koistinen 2008's Bracket",
+        "submitted_at": "2026-04-18T07:05:59.992597",
+        "picks": [
+            {
+                "series_identifier": "EC_R1_M1",
+                "predicted_winner": "BUF",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R1_M2",
+                "predicted_winner": "TBL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R1_M3",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M4",
+                "predicted_winner": "PIT",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 4
+            },
+            {
+                "series_identifier": "WC_R1_M2",
+                "predicted_winner": "MIN",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M3",
+                "predicted_winner": "VGK",
+                "predicted_length": 4
+            },
+            {
+                "series_identifier": "WC_R1_M4",
+                "predicted_winner": "EDM",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R2_M1",
+                "predicted_winner": "TBL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R2_M2",
+                "predicted_winner": "CAR",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R2_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R2_M2",
+                "predicted_winner": "VGK",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "EC_R3_CF",
+                "predicted_winner": "TBL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R3_CF",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "SCF",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            }
+        ]
+    },
+    {
+        "player_name": "Ala-Lemun kuppi",
+        "bracket_name": "Ala-Lemun kuppi's Bracket",
+        "submitted_at": "2026-04-18T07:10:32.824425",
+        "picks": [
+            {
+                "series_identifier": "EC_R1_M1",
+                "predicted_winner": "BUF",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M2",
+                "predicted_winner": "TBL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M3",
+                "predicted_winner": "OTT",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M4",
+                "predicted_winner": "PHI",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "WC_R1_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R1_M2",
+                "predicted_winner": "DAL",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "WC_R1_M3",
+                "predicted_winner": "VGK",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R1_M4",
+                "predicted_winner": "EDM",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R2_M1",
+                "predicted_winner": "TBL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R2_M2",
+                "predicted_winner": "OTT",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R2_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R2_M2",
+                "predicted_winner": "VGK",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R3_CF",
+                "predicted_winner": "TBL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R3_CF",
+                "predicted_winner": "COL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "SCF",
+                "predicted_winner": "COL",
+                "predicted_length": 5
+            }
+        ]
+    },
+    {
+        "player_name": "Toni",
+        "bracket_name": "Toni's Bracket",
+        "submitted_at": "2026-04-18T10:36:11.634071",
+        "picks": [
+            {
+                "series_identifier": "EC_R1_M1",
+                "predicted_winner": "BUF",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M2",
+                "predicted_winner": "TBL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R1_M3",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M4",
+                "predicted_winner": "PIT",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R1_M2",
+                "predicted_winner": "MIN",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "WC_R1_M3",
+                "predicted_winner": "UTA",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R1_M4",
+                "predicted_winner": "EDM",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R2_M1",
+                "predicted_winner": "TBL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R2_M2",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R2_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R2_M2",
+                "predicted_winner": "EDM",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R3_CF",
+                "predicted_winner": "TBL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R3_CF",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "SCF",
+                "predicted_winner": "COL",
+                "predicted_length": 6
+            }
+        ]
+    },
+    {
+        "player_name": "Mututuntuma",
+        "bracket_name": "Mututuntuma's Bracket",
+        "submitted_at": "2026-04-18T12:16:46.618526",
+        "picks": [
+            {
+                "series_identifier": "EC_R1_M1",
+                "predicted_winner": "BUF",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "EC_R1_M2",
+                "predicted_winner": "MTL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R1_M3",
+                "predicted_winner": "CAR",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "EC_R1_M4",
+                "predicted_winner": "PIT",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M1",
+                "predicted_winner": "COL",
+                "predicted_length": 5
+            },
+            {
+                "series_identifier": "WC_R1_M2",
+                "predicted_winner": "DAL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M3",
+                "predicted_winner": "UTA",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R1_M4",
+                "predicted_winner": "EDM",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R2_M1",
+                "predicted_winner": "BUF",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "EC_R2_M2",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R2_M1",
+                "predicted_winner": "DAL",
+                "predicted_length": 7
+            },
+            {
+                "series_identifier": "WC_R2_M2",
+                "predicted_winner": "EDM",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "EC_R3_CF",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "WC_R3_CF",
+                "predicted_winner": "DAL",
+                "predicted_length": 6
+            },
+            {
+                "series_identifier": "SCF",
+                "predicted_winner": "CAR",
+                "predicted_length": 6
+            }
+        ]
+    }
+]
