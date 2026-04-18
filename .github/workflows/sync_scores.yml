@@ -1,14 +1,17 @@
 name: Scheduled Score Sync
+
 on:
   schedule:
-    - cron: '0 */3 * * *' # Every 3 hours
-  workflow_dispatch:      # Allows you to click "Run" manually in GitHub
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Admin Sync
+        shell: bash
         run: |
-          curl -X POST https://lively-achievement-production-ec4a.up.railway.app/api/admin/update-official-results
-          -H "X-Admin-Token: ${{ secrets.ADMIN_SYNC_TOKEN }}"
+          curl -X POST "https://lively-achievement-production-ec4a.up.railway.app/api/admin/update-official-results" \
+          -H "X-Admin-Token: ${{ secrets.ADMIN_SYNC_TOKEN }}" \
+          -H "Content-Type: application/json"
