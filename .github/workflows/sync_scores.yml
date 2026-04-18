@@ -1,0 +1,14 @@
+name: Scheduled Score Sync
+on:
+  schedule:
+    - cron: '0 */3 * * *' # Every 3 hours
+  workflow_dispatch:      # Allows you to click "Run" manually in GitHub
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Admin Sync
+        run: |
+          curl -X POST https://your-railway-url.app/api/admin/update-official-results \
+          -H "X-Admin-Token: ${{ secrets.ADMIN_SYNC_TOKEN }}"
