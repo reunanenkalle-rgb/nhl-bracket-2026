@@ -12,6 +12,5 @@ jobs:
       - name: Trigger Admin Sync
         shell: bash
         run: |
-          curl -X POST "https://lively-achievement-production-ec4a.up.railway.app/api/admin/update-official-results" \
-          -H "X-Admin-Token: ${{ secrets.ADMIN_SYNC_TOKEN }}" \
-          -H "Content-Type: application/json"
+          curl -f -X POST "https://nhl-bracket-2026-production.up.railway.app/api/admin/update-official-results" \
+          -H "X-Admin-Token: ${{ secrets.ADMIN_SYNC_TOKEN }}"
