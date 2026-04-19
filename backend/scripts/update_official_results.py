@@ -30,7 +30,7 @@ except ImportError as e:
 # --- Configuration ---
 SEASON_TO_FETCH = "20252026"
 API_BASE_URL = "https://api-web.nhle.com"
-API_ENDPOINT = f"/v1/playoff-series/carousel/{SEASON_TO_FETCH}/"
+API_ENDPOINT = f"/v1/playoff-series/carousel/{SEASON_TO_FETCH}"
 
 # --- Mapping API Series Letter to your DB Series Identifiers ---
 API_SERIES_LETTER_TO_DB_MAP: dict[str, str] = {

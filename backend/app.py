@@ -227,12 +227,8 @@ def admin_update_results():
         return jsonify({"success": False, "error": "Unauthorized"}), 401
 
     try:
-        # Since 'app.py' and 'scripts/' are siblings in Railway:
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        script_path = os.path.join(base_dir, "scripts", "update_official_results.py")
-
-        # Log it so we can see it in Railway
-        print(f"DEBUG: Executing script at: {script_path}")
+        # This is the verified path inside your Railway container
+        script_path = "/app/scripts/update_official_results.py"
 
         result = subprocess.run(
             ["python3", script_path], capture_output=True, text=True
